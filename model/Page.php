@@ -1,0 +1,8 @@
+<?php
+/**
+* PageModel
+*/
+class Page
+{
+	
+}

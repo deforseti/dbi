@@ -1,0 +1,253 @@
+/*new home css*/
+.degr-crt{
+	    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background-position: center;
+    display: inline-block;
+}
+.wrap-a-transf{
+	position: relative;
+}
+
+
+.services-wrp{
+	text-align: center;
+	background: #fff;
+	padding:50px 15px;
+}
+.services-wrp h3{
+	font-size: 30px;
+	font-size: 1.875rem;
+}
+.wrapp-item-services{
+	overflow: hidden;
+}
+.wrapp-item-services>div{
+	float: left;
+    width: calc(25% - 30px);
+    margin: 15px 15px;
+    padding: 5px;
+}
+.wrapp-item-services>div img{
+	border-radius: 50%;
+	width: 100%;
+	height: 100%;
+	/*max-width: 200px;*/
+	padding:25px;
+	background: #fff;
+	border:5px solid #c1c1c1;
+	margin-bottom: 10px;
+}
+.wrapp-item-services>div img:hover{
+	border:5px solid #45b529;
+}
+.service-description{
+	font-size: 22px;
+	font-size: 1.375rem;
+	margin-bottom: 15px;
+	position: relative;
+	text-align: center;
+}
+.bg_drk .service-description a{
+	color:#fff;
+}
+.bg_whrt .service-description a{
+	color:#000;
+}
+.service-description .bord_bottom_text{
+	display: block;
+	width: 60px;
+	height: 2px;
+	position: absolute;
+	bottom:-7px;
+	left:calc(50% - 30px);
+	background: red;
+}
+
+.feedback_bl{
+	color:#fff;
+	text-align: center;
+	padding:30px 15px;
+}
+.tbForm_CallMe.connect-fdb{
+	display: inline-block;
+	background: #db5a4a;
+	color:#fff !important;
+	opacity: 1 !important;
+	width: initial;
+	height: initial;
+	padding:10px 25px;
+	border:0;
+	outline:0;
+	margin-top: 30px;
+	transition:.3s;
+	font-size:28px;
+	font-size:1.75rem;
+}
+.tbForm_CallMe.connect-fdb:hover{
+	background: #e87b6d;
+	transition: .3s;
+}
+.fedb-h3{
+	font-size: 28px;
+	font-size: 1.75rem;
+}
+.wrapp-about_us{
+	/*width: 1200px;*/
+	margin:0 auto;
+	padding:30px 15px;
+	overflow: hidden;
+}
+.inline_element_v{
+	padding:45px 0;
+	display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.form-home input,.form-home textarea{
+	width: 100%;
+	padding:15px 10px;
+	border-radius: 3px;
+	color: #000;
+	resize: vertical;
+	display: block;
+	margin-bottom: 20px;
+	font-size:1rem;
+}
+.form-home{
+	margin-top: 30px;
+}
+.form-home textarea{
+	min-height: 150px;
+}
+.inline_element_v svg{
+	margin-left: 20px;
+}
+.form-home input[name="send_from_dbi"]{
+	background: #e87b6d;
+	height: 76px;
+	font-size:24px;
+	font-size:1.5rem;
+	color:#fff;
+	border:0;
+	outline: 0;
+}
+.form-home input[name="send_from_dbi"]:hover{
+	background: #ff452e;
+}
+.inline_element_v .tbForm_CallMe.connect-fdb{
+	margin-top: 0;
+}
+.about_us_shrt{
+	background: #272727;
+	color:#fff;
+}
+.wrapp-about_us>div{
+	float: left;
+	width: 33.333333%;
+}
+.bl_title_abut{
+	font-size: 40px;
+	font-size: 2.5rem;
+}
+.bl_title_abut,.bl_text_abut{
+	text-align: left;
+}
+.bl_text_abut{
+	color: #818181;
+	font-size: 1.18rem;
+    padding: 0 15px;
+}
+.itm_abut_el>div{
+	display: flex;
+	align-items: center;
+  	padding:0 15px;
+  	margin-bottom: 20px;
+  	font-size: 1rem;
+}
+.f_persent_true{
+	/*margin-right: 15px;*/
+	width: 10vw;
+	height: 10vw;
+	border-radius: 50%;
+	border:3px solid red;
+	/*padding:15px;*/
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+div.f_persent_true + div{
+	margin-left: 15px;
+}
+.f_persent_true:hover{
+	border:3px solid #45b529 !important;
+}
+.f_persent_true span{
+	font-size: 1rem;
+}
+.sub_text_elem{
+	font-size: 1rem;
+}
+.bg_drk{
+	background: #272727;
+	color:#fff;
+}
+.bg_whrt{
+	background: #fff;
+	color:#000;
+}
+
+.brends_move_line{
+	overflow: hidden;
+}
+.wrp_for_small{
+	position: relative;
+}
+.wrap_circle_cat{
+	 column-count: 2;
+	 position: relative;
+}
+.elem_corcle_cat{
+	position: relative;
+	display:inline-grid;
+	overflow: hidden;
+	width: 100%;
+	z-index: 2;
+	margin-bottom: 20px;
+	margin-bottom: 5.5vw;
+}
+.wrap_circle_cat .elem_corcle_cat:last-child{
+	margin-bottom: 0;
+}
+
+.elem_corcle_cat img{
+	width: 100%;
+	border-radius: 50%;
+	border:10px solid #cac3c3;
+}
+.elem_corcle_cat img:hover{
+	border:3px solid red;
+}
+.wrapp-small-cat .elem_corcle_cat img:hover{
+	border:3px solid red;
+}
+.wrapp-small-cat{
+	width: 100%;
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	list-style: none;
+	z-index: 1;
+	opacity: 0;
+}
+.wrapp-small-cat a{
+	width: 10vw;
+	position: relative;
+	z-index: 3;
+	margin-bottom: 0;
+}
+/*end home css*/
