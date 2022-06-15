@@ -38,6 +38,9 @@ if (!headers_sent()) {
         <?php if ($object['canonical']) { ?>
             <link rel="canonical" href="<?= $object['canonical']?>" />
         <?php } ?>
+        <?php foreach($object['hreflangs'] as $key=>$obj) { ?>
+            <link rel="alternate" href="<?= $obj?>" hreflang="<?= $key?>" />
+        <?php } ?>
 		<!-- Facebook Pixel Code -->
 <script>
   !function(f,b,e,v,n,t,s)

@@ -77,7 +77,7 @@ class Lang
 			}
 			$field_values_ar[] = "'" . $field_value . $sub . "'";
 		}
-		$sql .= '(' . implode($field_names_ar,', ') . ')' . ' VALUES ' . '(' . implode($field_values_ar,', ') . ')';
+		$sql .= '(' . implode(', ',$field_names_ar) . ')' . ' VALUES ' . '(' . implode(', ',$field_values_ar) . ')';
 		return $sql;
 
 	}
