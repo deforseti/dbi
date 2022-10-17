@@ -33,13 +33,16 @@
 				</ul>
 			</div>
 		</div>
+        <?php $test_lang = new LangSwitcher();?>
 		<div class="row lang-panel">
 			<div class="col-lg-2">
 				<?php
-					$test_lang = new LangSwitcher();
-					$test_lang->initLangSwicher($object);
-				?>
+					$test_data = $test_lang->initLangSwicher($object);
+                ?>
 			</div>
+            <div class="col-lg-12">
+                <?php if($metadata['cities_url']) $test_lang->switcherLocal($test_data);?>
+            </div>
 			<div class="col-lg-6 relation-lang">
 
 			</div>

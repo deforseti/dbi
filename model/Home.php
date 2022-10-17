@@ -6,9 +6,10 @@ class Home
 	{
 		global $db;
 		global $LANG;
-		$data = $db->query("SELECT relation_pages FROM menu WHERE menu_name = 'left-menu' AND lang = '".$LANG."' ");
-		$data = Db::returnResults($data);
-		
+		$city_id =  (int) htmlspecialchars($_COOKIE["CURRENT_CITY"]) ?? 1;
+//		$where = $city_id === 1 ? ' AND city_id = 1 ' : " AND (city_id = 1 OR city_id = {$city_id}) ";
+        $data = $db->query("SELECT relation_pages FROM menu WHERE menu_name = 'left-menu' AND lang = '".$LANG."' AND city_id = {$city_id} ORDER BY city_id DESC LIMIT 1");
+        $data = Db::returnResults($data);
 		$ids = json_decode($data['relation_pages'],TRUE);
 		if( count($ids) )
 		{

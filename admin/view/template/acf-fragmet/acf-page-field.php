@@ -22,6 +22,119 @@ $fields = Core::getACF($post_id_acf,$field_names);
 </div>
 
 <div class="single-element">
+    <h4 align="center">Фильры</h4>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <form method="POST" action="/admin/admin.php?page=filter&post_id=<?= $object['id']?>&type=add_filter_value">
+                <p class="title-singl-element title-block">Цена:</p>
+                <input type="text" class="form-control" value="<?=$metadata['filters_value']['price']?>" name="value">
+                <input type="hidden" class="form-control" value="price" name="type_name">
+                <input type="submit" class="btn btn-primary" value="Сохранить">
+            </form>
+        </div>
+        <div class="col-lg-6">
+            <form method="POST" action="/admin/admin.php?page=filter&post_id=<?= $object['id']?>&type=add_filter_value">
+                <p class="title-singl-element title-block">Старая цена:</p>
+                <input type="text" class="form-control" value="<?=$metadata['filters_value']['sales']?>" name="value">
+                <input type="hidden" class="form-control" value="sales" name="type_name">
+                <input type="submit" class="btn btn-primary" value="Сохранить">
+            </form>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-lg-12">
+            <p class="title-singl-element title-block">Материал товара:</p>
+            <form method="POST" action="/admin/admin.php?page=filter&post_id=<?= $object['id']?>&type=add_filter_value">
+                <input type="hidden" class="form-control" value="materials" name="type_name">
+                <div class="input-group text-left relation-element-wrapp">
+                    <?php
+                    if( $metadata['materials'] )
+                    {
+                        foreach ( $metadata['materials'] as $material ) { ?>
+                            <p class="relation-element">
+                                <input type="radio" <?= $metadata['filters_value']['materials'] === $material['id']  ? 'checked' : ''?> name="value" id="materials_<?= $material['id'] ?>" value="<?= $material['id'] ?>">
+                                <label for="materials_<?= $material['id'] ?>"><?= $material['name_'.$object['lang']] ?></label>
+                            </p>
+                            <?php
+                        }
+                    }
+                    ?>
+                </div>
+                <input type="submit" class="btn btn-primary" value="Сохранить">
+            </form>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-lg-12">
+            <p class="title-singl-element title-block">Бренд:</p>
+            <form method="POST" action="/admin/admin.php?page=filter&post_id=<?= $object['id']?>&type=add_filter_value">
+                <input type="hidden" class="form-control" value="brands" name="type_name">
+                <div class="input-group text-left relation-element-wrapp">
+                    <?php
+                    if( $metadata['brands'] )
+                    {
+                        foreach ( $metadata['brands'] as $brand ) { ?>
+                            <p class="relation-element">
+                                <input type="radio" <?= $metadata['filters_value']['brands'] === $brand['id'] ? 'checked' : '';?> name="value" id="brands_<?= $brand['id'] ?>" value="<?= $brand['id'] ?>">
+                                <label for="brands_<?= $brand['id'] ?>"><?= $brand['name_'.$object['lang']] ?></label>
+                            </p>
+                            <?php
+                        }
+                    }
+                    ?>
+                </div>
+                <input type="submit" class="btn btn-primary" value="Сохранить">
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="single-element">
+    <div class="container wrapp_content">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Вопрос</th>
+                <th scope="col">Ответ</th>
+                <th scope="col">Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <form method="POST" action="/admin/admin.php?page=faq&post_id=<?= $object['id']?>">
+                <tr>
+                    <td><input class="form-control" type="text" name="question" required></td>
+                    <td><textarea class="form-control" type="text" name="answer" required></textarea></td>
+                    <td>
+                        <button type="submit" name="add_question" class="btn btn-success btn-sm" value=""><i class="glyphicon glyphicon-plus" aria-hidden="true"></i></button>
+                    </td>
+                </tr>
+            </form>
+            <?php foreach ($metadata['faq'] as $question) :?>
+                <form method="post" action="/admin/admin.php?page=faq&post_id=<?= $object['id']?>">
+                    <tr>
+                        <input hidden name="id" value="<?= $question['id']?>">
+                        <th><input class="form-control" type="text" name="question" required value="<?= $question['question'] ?>"></th>
+                        <td><textarea class="form-control" type="text" name="answer" required><?= $question['answer']?></textarea></td>
+                        <div class="row">
+                            <td>
+                                <div class="row">
+                                    <button type="submit" class="btn btn-primary btn-sm" name="edit_question"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i></button>
+                                    <button type="submit" class="btn btn-danger btn-sm" name="remove_question"><i class="glyphicon glyphicon-trash" aria-hidden="true"></i></button>
+                                </div>
+                            </td>
+                        </div>
+                    </tr>
+                </form>
+            <?php endforeach;?>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="single-element">
 	<form method="POST">
 		<p class="title-singl-element title-block">Кнопки на опросный листы</p>
 			<div class="single-element col-lg-12">

@@ -1,6 +1,3 @@
-<?php
-// var_dump($object);
-?>
 <div class="container wrapp_content">
 	<div class="row">
 		<div class="col-lg-12">
@@ -23,15 +20,27 @@
 		<div class="col-lg-12">
 			<div class="single-element">
 				<p class="title-singl-element title-block">Меню сайта</p>
+                <div class="col-lg-12">
+                    <?php foreach ($metadata['menu_cities'] as $city): ?>
+                        <div class="pull-left">
+                            <?php if ($metadata['cur_city'] === $city['id']): ?>
+                                <span class="text-success" style="padding: 0 2px;text-decoration: underline;"><?= $city['name'] ?></span>
+                            <?php else:?>
+                                <a class="" href="<?= $city['href'] ?>" style="padding: 0 2px;"><?= $city['name'] ?></a>
+                            <?php endif;?>
+                        </div>
+                    <?php endforeach;?>
+                </div>
 				<ul class="menu-names-item-list">
 					<?php
-						foreach ($metadata['menu_list'] as $key => $menu_item ) {
+                        $metadata['menu_list'][$metadata['cur_city']] = empty($metadata['menu_list'][$metadata['cur_city']]) ? [] : $metadata['menu_list'][$metadata['cur_city']];
+						foreach ($metadata['menu_list'][$metadata['cur_city']] as $key => $menu_item ) {
 
 							?>
 								<li>
 									<?=$menu_item['menu_name']?>
 									<?php
-										foreach ($metadata['menu_list'] as $k => $item_m) {
+										foreach ($metadata['menu_list'][$metadata['cur_city']] as $k => $item_m) {
 											if( $item_m['menu_name'] == $menu_item['menu_name'] ){
 												?>
 													<a class="
@@ -41,7 +50,7 @@
 															echo 'curr_menu_lang ';
 														}
 													?>
-													menu-lang-swich" href="?page=menu&menu_id=<?=$item_m['id']?>&lang=<?=$item_m['lang']?>"><?=$item_m['lang']?></a>
+													menu-lang-swich" href="?page=menu&menu_id=<?=$item_m['id']?>&lang=<?=$item_m['lang']?>&city=<?=$metadata['cur_city']?>"><?=$item_m['lang']?></a>
 												<?php
 											}
 										}
@@ -76,7 +85,7 @@
 											?>
 												<p class="relation-element"> 
 													<input type="checkbox" name="relation_category[]" id="relation_cat_<?=$item['id']?>" value="<?=$item['id']?>|||<?=$item['post_name']?>">
-													<label for="relation_cat_<?=$item['id']?>"><?=$item['post_name']?></label>
+													<label for="relation_cat_<?=$item['id']?>"><?=$item['post_name'] . (empty($item['city']) ? '' : " | ".$item['city'])?></label>
 												</p>
 											<?php
 										}

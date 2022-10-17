@@ -2,11 +2,14 @@
 class Category
 {
 	public $count = 0;
-	public static function getCategories($type='category',$lang='ru')
+    public static $categories = [];
+
+    public static function getCategories($type='category',$lang='ru')
 	{
 		global $db;
 		$data = $db->query("SELECT id,post_name,position,parent,type FROM dbi_posts WHERE type = '".$type."' AND lang = '".$lang."' ORDER BY position");
 		$data =  Db::returnResults($data,true);
+		self::$categories = $data;
 		return $data;
 	}
 

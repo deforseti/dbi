@@ -82,12 +82,13 @@
                     <p class="title-singl-element">URL</p>
                     <input type="text" class="form-control" value="<?=$object['redirect_url']?>" name="post_redirect_url">
                 </div>
-				<div class="single-element">
-					<p class="title-singl-element">Сохранить все данные для текущего поста:</p>
-					<input type="submit" class="btn btn-primary" name="save_post_data" value="Сохранить">
-				</div>
 			</div>
 		</div>
+
+        <div class="single-element">
+            <p class="title-singl-element">Сохранить все данные для текущего поста:</p>
+            <input type="submit" class="btn btn-primary" name="save_post_data" value="Сохранить">
+        </div>
 	</div>
 </form>
 <div class="container wrapp_content">

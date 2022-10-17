@@ -83,7 +83,21 @@ $fields = Core::getACF((int)$_GET['post_id'],$field_names);
 				<input type="submit" class="btn btn-primary" name="SAVE_ACF_FIELD_INIT_999" value="Сохранить">
 			</div>
 		</form>
-		<form method="POST">
+        <div class="img-div-wrapp single-element col-lg-6">
+            <?php $img_src = file_exists('../uploads/images/new_logo_dbi_none_bg.png')
+                ? '../uploads/images/new_logo_dbi_none_bg.png' : '../uploads/images/logo_dbi_none_bg.png';?>
+
+            <img src="<?= $img_src ?>" width="300">
+            <form method="POST" enctype="multipart/form-data">
+
+                        <p class="title-singl-element title-block">Загрузить логотип в png. Если нет - загружается по умолчанию</p>
+                        <input type="file" class="form-control" name="site_logotype" accept="image/png">
+                        <input type="submit" class="btn btn-primary" name="save_logo" value="Сохранить">
+                        <input type="submit" class="btn btn-danger" name="delete_logo" value="Вернуть стандарный">
+            </form>
+        </div>
+
+    <form method="POST">
 			<div class="single-element col-lg-12">
 				<p class="title-singl-element title-block">Block1 (4 блока с фото и информацией):</p>
 				<input type="hidden" name="count_arr_acf_field" value="7">

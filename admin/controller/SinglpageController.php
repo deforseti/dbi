@@ -23,6 +23,8 @@ class SinglpageController
 
 		$data_object = array();
 
+        $this->data_errors['materials'] = Filter::getFilterListByType('materials');
+        $this->data_errors['brands'] = Filter::getFilterListByType('brands');
 
 
 		if( isset($_GET['post_id']))
@@ -32,6 +34,10 @@ class SinglpageController
 			$this->data_errors['relation_categories'] = SinglPage::relationCategoryData($template,$data_object['lang']);
 
 			$this->data_errors['errors_post'] = $errors_post;
+
+            $this->data_errors['filters_value'] = Filter::get_filters_values_by_post($_GET['post_id']);
+
+            $this->data_errors['faq'] = Faq::get_questions($_GET['post_id']);
 
 			TemplateController::actionTemplate($template,$data_object,$this->data_errors);
 		}

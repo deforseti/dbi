@@ -39,7 +39,7 @@
 							<li><?=$fields_opt['google_map_script'][3]?></li> 		
 						</ul>
 						<div class="googl_map"> 
-							<iframe src="<?=$fields_opt['adress_organization']?>" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen="">
+							<iframe src="<?=$fields_opt['adress_organization']?>" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="">
 							</iframe>
 						</div>
 					</div>	
@@ -52,6 +52,47 @@
 			</div>
 		</div>
 	</div>
+    <div id="customModal" class="custom-modal">
+        <div class="custom-modal-content">
+            <div class="custom-modal-header">
+                <span class="custom-modal-close">&times;</span>
+                <h2>Выбор текущего города</h2>
+            </div>
+            <div class="custom-modal-body" style="display:grid;">
+                <input type="text" id="search_current_city" width="90%" title="Введите название населенного пункта">
+                <div class="row">
+                    <div class="col-lg-2">
+                        <?php $default_city =  $LANG === 'en' ? 'Kyiv' : ($LANG === 'ru' ? 'Киев' : 'Київ') ?>
+                        <a onclick="changeCurrentCity(1)"><?= $default_city ?></a>
+                    </div>
+                <?php foreach ($object['main_cities'] as $city):?>
+                    <div class="col-lg-2">
+                        <a onclick="changeCurrentCity(<?= $city['id'] ?> ?>')"><?= $city['name'] ?></a>
+                    </div>
+                <?php endforeach;?>
+                </div>
+                <div class="col-lg-12" id="states_list">
+                <?php foreach ($object['states_list'] as $id => $state):?>
+                    <div class="col-lg-4 col-md-6">
+                        <a onclick="showCityByState(<?= $id ?>)"><?= $state ?></a>
+                    </div>
+                <?php endforeach;?>
+                </div>
+                <div class="col-lg-12" id="cities_list" style="display: none">
+                    <div class="col-lg-12">
+                        <a onclick="showStates()">←<?= $LANG === 'en' ? 'Back' : 'Назад'?></a>
+                    </div>
+                <?php foreach ($object['cities_list'] as $city) :?>
+                    <div class="col-lg-3">
+                        <a id="state_<?= $city['state_id'] ?>" onclick="changeCurrentCity(<?= $city['id'] ?>)"><?= $city['name_'.$LANG] ?></a>
+                    </div>
+                <?php endforeach;?>
+                </div>
+            </div>
+            <div class="custom-modal-footer">
+            </div>
+        </div>
+    </div>
 	<!-- <div  class="tbForm_CallMe jump" data-tbform="M-XXX">
    		<div class="tbForm_shadow"></div>
    		<div class="tbForm_fone"><span>Заказать звонок</span></div>
@@ -63,6 +104,39 @@
 	<script async defer src="<?=LoadScripts::loadJs()?>"></script>
 
 	<script>
+
+    let customModal = document.getElementById('customModal'),
+        btn = document.getElementById("city_modal"),
+        span = document.getElementsByClassName("custom-modal-close")[0],
+        search_current_city = document.getElementById('search_current_city'),
+        states_list = document.getElementById('states_list');
+
+
+    btn.onclick = function() {
+        customModal .style.display = "block";
+        showStates();
+    }
+
+    search_current_city.oninput = function () {
+        let city_part = search_current_city.value === '' ? '' : search_current_city.value.toLowerCase();
+
+        if(city_part !== '') {
+            city_part = city_part[0].toUpperCase() + city_part.slice(1);
+        }
+
+        showCityByPath(city_part);
+    }
+
+    span.onclick = function() {
+        customModal .style.display = "none";
+    }
+
+    window.onclick = function(event) {
+        if (event.target == customModal) {
+            customModal .style.display = "none";
+        }
+    }
+
 		 // recapcha callack
 	function onloadCallback() {
 		mysitekey = '6LfFc3kUAAAAAHGwjvI904eugY0qOCkIBpqBJGQw';

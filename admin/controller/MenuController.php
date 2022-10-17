@@ -20,25 +20,28 @@ class MenuController
 
 	public function actionMenu($template)
 	{
-		// save structure menu
+	    $cur_city = $_GET['city'] ?? '0';
+        // save structure menu
 		$this->saveStructureMenu();
-		
 
-		$this->get_data_list_items();
+
+        $this->get_data_list_items($cur_city);
 		$this->get_menu();
 		$this->if_menu_id_isset();
 
-		
 
+
+        $this->get_menu_cities();
+        $this->data_menus['cur_city'] = $cur_city;
 		TemplateController::actionTemplate($template,$this->data_return_elements,$this->data_menus);
 		return true;
 	}
 
 	// выборка всех елементов для построение списка в меню
-	public function get_data_list_items()
+	public function get_data_list_items($city_id = 1)
 	{
 		foreach ( $this->type_pages as $type => $name ) {
-			$data_type = Menu::get_data_element($type);
+			$data_type = Menu::get_data_element($type,$city_id);
 			$ar['name_block'] = $name;
 			$ar['list_elems'] = $data_type;
 			$this->data_return_elements['element_'.$type] = $ar;
@@ -142,4 +145,18 @@ class MenuController
 		}
 		
 	}
+
+	public function get_menu_cities()
+    {
+        $menu = array(['id' => '1', 'name' => 'Украина', 'href' => 'https://' . $_SERVER['SERVER_NAME'] . '/admin/admin.php?page=menu']);
+        $cities = Regionality::getNameCities() ?? [];
+        if (!empty($cities)) {
+            foreach ($cities as $key => $city) {
+                $menu[$key + 1]['id'] = $city['id'];
+                $menu[$key + 1]['name'] = $city['name'];
+                $menu[$key + 1]['href'] = 'https://' . $_SERVER['SERVER_NAME'] . '/admin/admin.php?page=menu&city=' . $city['id'];
+            }
+        }
+        $this->data_menus['menu_cities'] = $menu;
+    }
 }

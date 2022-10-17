@@ -1,23 +1,23 @@
 <style type="text/css">
 	@font-face {
     font-family:klavika; /* Имя шрифта */
-    src: url(view/fonts//DIN_Medium.ttf); /* Путь к файлу со шрифтом */
+    src: url(/view/fonts//DIN_Medium.ttf); /* Путь к файлу со шрифтом */
    }
 
 @font-face {
     font-family:'bookOldStyle'; /* Имя шрифта */
-    src: url(view/fonts//BKMNOS.ttf); /* Путь к файлу со шрифтом */
+    src: url(/view/fonts//BKMNOS.ttf); /* Путь к файлу со шрифтом */
    }
 
 @font-face {
     font-family:centurygothic; /* Имя шрифта */
-    src: url(view/fonts//CenturyGothic.ttf); /* Путь к файлу со шрифтом */
+    src: url(/view/fonts//CenturyGothic.ttf); /* Путь к файлу со шрифтом */
 }
 @font-face {
   font-family: 'Material Icons';
   font-style: normal;
   font-weight: 400;
-  src: url(view/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+  src: url(/view/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
 }
 
 .material-icons {
@@ -195,7 +195,6 @@ html{
 	margin-bottom: 10px;
 	box-shadow: 0 0 10px rgba(0,0,0,0.5);
 	background: #fff;
-    position: fixed;
 }
 .wrapp-head-content{
 	display: flex;

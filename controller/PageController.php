@@ -9,7 +9,8 @@ class PageController
             header("Location: " . $object['redirect_url'], true, $object['redirect_type']);
             exit();
         }
-		TemplateController::actionTemplate($object['type'],$object);
+        $object['filters'] = Page::getFiltersProduct($object['id']);
+        TemplateController::actionTemplate($object['type'],$object);
 		return true;
 	}
 }

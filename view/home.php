@@ -114,3 +114,15 @@
 			</div>
 		</div>
 	</div>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+</button>
+
+<!-- Modal -->
+<div >
+    <form action="/regionality">
+        <input name="cur_city" value="kyiv">
+        <button type="submit">отправить</button>
+    </form>
+</div>

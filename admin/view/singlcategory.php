@@ -3,7 +3,7 @@
 	<div class="container wrapp_content">
 		<div class="row">
 			<div class="col-lg-12">
-				<?php 
+				<?php
 					if( $metadata['errors_post'] === true )
 					{
 						echo '<p class="alert-info alert-ok">Сохранено! :)</p>';
@@ -11,7 +11,7 @@
 					elseif( $metadata['errors_post'] === false )
 					{
 						echo '<p class="alert-info alert-error">Ошибка сохранения! :(</p>';
-					}	
+					}
 				?>
 			</div>
 			<div class="col-lg-8">
@@ -19,11 +19,24 @@
 					<p class="title-singl-element title-block">Название:</p>
 					<input required="required" type="text" class="form-control" value="<?=$object['post_name']?>" name="post_name">
 				</div>
-				
 				<div class="single-element">
 					<p class="title-singl-element title-block">Ссылка поста:</p>
 					<p class="title-singl-element">Продублируйте название поста, скрипт сам сделает транслейт!</p>
-					<input type="text" class="form-control" value="<?=$object['url']?>" name="post_url">
+                    <?php if ((int)$object['city_id'] === 1):?>
+                        <input type="text" class="form-control" value="<?=$object['url']?>" name="post_url">
+                    <?php else :?>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1"><?= $metadata['cities_url'][$object['city_id']]?>/</span>
+                                    <input type="text" class="form-control" value="<?=$object['url']?>" name="post_url" aria-describedby="basic-addon1">
+                                    <span class="input-group-btn">
+                                        <a href="/<?= $metadata['cities_url'][$object['city_id']] .'/'. $object['url']?>" class="btn btn-default" type="button" target="_blank"><i class="glyphicon glyphicon-share-alt"></i></a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif ?>
 				</div>
 				<div class="single-element">
 					<p class="title-singl-element title-block">Мета СЕО:</p>
@@ -93,4 +106,46 @@
 </form>
 <div class="container wrapp_content">
 	<?php require_once('template/acf-fragmet/acf-fragment-video.php'); ?>
+	<?php if ($object['count_subcategories'] > 0) require_once('template/acf-fragmet/acf-fragment-menu-second-category.php'); ?>
 </div>
+<script>
+    function add_filter(type,id) {
+        let brand_list = $('#' + type + '_filter_list'),
+            new_brand = '#' + type + '_' + id;
+            position = $('#brand_filter_list li').last().attr('data-post-position') ? +$('#brand_filter_list li').last().attr('data-post-position') + 1 : 0,
+            new_position = '<li data-post-id="' + id + '" data-post-position="' + position + '" class="ui-state-default ui-sortable-handle">' + $(new_brand).text() + '<i onclick="remove_filter(this,\'brand\',' + id +');return false; " class="glyphicon glyphicon-trash" aria-hidden="true" style="float: right"></i></li>';
+        $(new_brand).closest('p').remove();
+        $(brand_list).append(new_position);
+        add_change_filter(type);
+    }
+    function remove_filter(button,type,id) {
+        let selector = $(button).closest('li'),
+            html  = '<p class="relation-element" name="p_brand_' + id +'">';
+            html += '   <span data-post_id="' + id + '" id="brand_' + id + '">' + $(selector).text() + '</span>';
+            html += '   <button class="btn btn-success btn-sm" style="float: right" onclick="add_filter(\'#' + type +'_'+id+'\',' + id + ');return false;">';
+            html += '       <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>'
+            html += '   </button>';
+            html += '</p>';
+        $('div[name="' +type+ '_list"]').append(html);
+        $(selector).remove();
+        add_change_filter(type);
+    }
+
+    function add_change_filter(type) {
+        let form = $('#' + type + '_form_filter'),
+            arr_position = new Array();
+        if ($('#' + type + '_filter_list li').length === 0) {
+            $('input[name="sortable_element"]').removeAttr('value');
+        } else {
+            $('#' + type + '_filter_list li').each(function () {
+                let j_data_arr = {
+                    "id": $(this).attr('data-post-id'),
+                    "position": $(this).attr('data-post-position')
+                };
+                arr_position.push(j_data_arr);
+                let position_json = JSON.stringify(arr_position);
+                $(form).val(position_json);
+            });
+        }
+    }
+</script>

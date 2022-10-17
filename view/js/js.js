@@ -654,3 +654,123 @@ $('.right-card-menu').hover(function(){
    		}
    	});
 });
+
+//Закрепляется меню при вверстке вверх. Открепляется листая вниз или когда доходит ~ до хлебных крошек
+let prevScrollpos = window.pageYOffset;
+window.onscroll = function() {
+	let currentScrollPos = window.pageYOffset,
+		header = document.querySelector('.header');
+	if (prevScrollpos > currentScrollPos && currentScrollPos > 100) {
+		header.style.position = "fixed";
+	} else {
+		header.style.position = null;
+	}
+	prevScrollpos = currentScrollPos;
+}
+
+$('div.filters [type="checkbox"]').change(function () {
+	setFiltersCategory();
+});
+
+$('body .filters_search').keyup(function () {
+	let find_category = $(this).val().length ? $(this).val() : '',
+		ul = $(this).siblings('ul');
+
+	if (find_category === '') {
+		ul.find('li').removeAttr('hidden');
+	} else {
+		ul.find('li').attr('hidden',true);
+		ul.find('label:contains("' + find_category +'"),label:contains("' + find_category.substr(0,1).toUpperCase()+find_category.substr(1) +'"),label:contains("' + find_category.toLowerCase() +'"),label:contains("' + find_category.toUpperCase() +'")').each(function () {
+			$(this).closest('li').removeAttr('hidden');
+		});
+	}
+});
+
+$('.filter_form').submit(function (){
+	event.preventDefault();
+})
+
+function setFiltersCategory(type = '') {
+	let form = $('div.test>form'),
+		brands = $('div.test input[name^="brand_"]'),
+		materials = $('div.test input[name^="material_"]'),
+		sales = $('div.test input[name="sales"]'),
+		price_min = $('div.test input[name="filter_price_min"]').val(),
+		price_max = $('div.test input[name="filter_price_max"]').val(),
+		url = document.location.origin + document.location.pathname,
+		url_part = [],
+		data = {};
+
+	if (sales.prop('checked')) {
+		data.sales = 'on';
+		url_part.push('sales=' + 'on');
+	}
+	if (price_min !== '') {
+		url_part.push('price_min=' + price_min.replace(/[^0-9]/gi, ''));
+	}
+	if (price_max !== '') {
+		url_part.push('price_max=' + price_max.replace(/[^0-9]/gi, ''));
+	}
+
+	data.brands_id = [];
+	brands.each(function () {
+		if ($(this).prop('checked')) {
+			data.brands_id.push($(this).attr('data-id')) ;
+		}
+	});
+
+	if (data.brands_id.length) {
+		url_part.push('brands_id=' + data.brands_id.join(':'));
+	}
+
+	data.materials_id = [];
+	materials.each(function () {
+		if ($(this).prop('checked')) {
+			data.materials_id.push($(this).attr('data-id')) ;
+		}
+	});
+
+	if (data.materials_id.length) {
+		url_part.push('materials_id=' + data.materials_id.join(':'));
+	}
+	url = url + (url_part.length>0 ? '?' + url_part.join('&') : '');
+
+	$(location).attr('href',url);
+}
+
+function showCityByState(state_id) {
+	if (state_id) {
+		$('#states_list').css('display','none');
+		$('#cities_list').css('display','block');
+		$('[id="state_' + state_id +'"]').css('display','block')
+	}
+}
+
+function showCityByPath(cityPart = '') {
+	if (cityPart === '') {
+		showStates()
+	} else {
+		$('#states_list').css('display','none');
+		$('#cities_list').css('display','block')
+		$('#cities_list a').css('display','none');
+		$('#cities_list a:contains("' + cityPart + '")').css('display','block');
+	}
+}
+
+function showStates() {
+	$('#states_list').css('display','block');
+	$('[id^="state_"]').css('display','none')
+	$('#cities_list').css('display','none');
+}
+
+function changeCurrentCity(city = 1) {
+	let oldCity = 1,
+		matchCity = document.cookie.match(new RegExp('(^| )CURRENT_CITY=([^;]+)'))[2];
+
+	if (matchCity !== '' && matchCity !== undefined) {
+		oldCity = parseInt(matchCity) > 0 ? parseInt(matchCity) : 1;
+	}
+
+	document.cookie = 'CURRENT_CITY=' + city;
+	document.location.href = document.location.origin + document.location.pathname + '?change_city=' + city +'&old=' + oldCity;
+}

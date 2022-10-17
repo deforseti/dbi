@@ -16,6 +16,21 @@ class LangSwitcher
 	private function htmlLang($urls)
 	{
 		global $LANG;
+        $langs_local = [
+            'uk' => [
+                'ru' => 'Рус',
+                'en' => 'Eng'
+            ],
+            'ru' => [
+                'uk' => 'Укр',
+                'en' => 'Eng'
+            ],
+            'en' => [
+                'uk' => 'Укр',
+                'ru' => 'Рус'
+            ]
+        ];
+
 		if( is_array($urls))
 		{
 			?>
@@ -28,8 +43,13 @@ class LangSwitcher
 								{
 									$v['url'] = '/';
 								}
+                                /**
+                                 * Убираем фраги временно. Выводим текстом.
+                                 * <a href="<?=$v['url']?>"><img src="<?=self::$flags[$v['lang']];?>"></a>
+                                 */
+
 								?>
-									<a href="<?=$v['url']?>"><img src="<?=self::$flags[$v['lang']];?>"></a>
+									<a href="<?=$v['url']?>"><?= $langs_local[$LANG][$v['lang']]?></a>
 								<?php
 							}
 							

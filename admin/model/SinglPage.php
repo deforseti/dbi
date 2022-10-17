@@ -120,6 +120,9 @@ else
 		$ar['img_post'] = $img_url_json;
 		$date = date("Y-m-d H:i:s");
         $ar['date_md'] = $date;
+        $ar['price'] = $_POST['price'];
+        $ar['brands_id'] = empty($_POST['brands_id']) ? '' : $_POST['brands_id'];
+        $ar['materials_id'] = empty($_POST['materials_id']) ? '' : $_POST['materials_id'];
 
         $ar['canonical'] = empty($_POST['post_canonical']) ? 'https://' . $_SERVER['HTTP_HOST'] . '/' . $ar['url']
             : $_POST['post_canonical'];

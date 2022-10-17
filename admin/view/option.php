@@ -17,6 +17,13 @@ $fields = Core::getACF((int)$_GET['post_id'],$field_names);
 ?>
 <div class="container wrapp_content">
 	<div class="row">
+        <div class="col-lg-12">
+                <a class="btn btn-primary" href="?page=regionality">Города</a>
+                <a class="btn btn-primary" href="?page=filter&type=brands">Торговая марка</a>
+                <a class="btn btn-primary" href="?page=filter&type=materials">Материал</a>
+                <a class="btn btn-danger" href="?page=migrate" onclick="confirm('Запустить миграции в БД?')">Миграции</a>
+                <hr>
+        </div>
 		<div class="col-lg-4">
 			<div class="single-element">
 					<p class="title-singl-element title-block">Почта получения заявок</p>

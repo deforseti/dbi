@@ -2,11 +2,15 @@
 
 class SinglCategory
 {
+    public static $all_categories = [];
 	public static function getDataSinglCategory()
 	{
 		$single_id = (int)$_GET['post_id'];
 		global $db;
-		$data = $db->query('SELECT * FROM dbi_posts WHERE id = "'.$single_id.'"');
+		$data = $db->query(
+		        'SELECT dbi_posts.*, 
+		        (SELECT count(*) FROM dbi_posts as d_p WHERE d_p.categories LIKE "%\"'.$single_id.'\"%") as count_subcategories 
+		        FROM dbi_posts WHERE id = "'.$single_id.'"');
 		$data_object = Db::returnResults($data);
 		return $data_object;
 	}
@@ -173,6 +177,7 @@ class SinglCategory
 	{
 		$type = preg_replace('/singl/', '', $type);
 		$data_object = Category::getCategories($type,$lang);
+		self::$all_categories = Category::$categories;
 		$initTree = new CategoryController();
 		$initTree->getStructureCategory($data_object);
 		return $initTree->parent_tree;

@@ -34,13 +34,22 @@ if (!headers_sent()) {
 		<link rel="shortcut icon" href="/images/dbi_com_ua.png" type="image/png">
 		<!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
 		<?php LoadScripts::including_header_style();?>
-		<link rel="stylesheet" type="text/css" href="<?=LoadScripts::loadCss($object['type'])?>">
+		<link rel="stylesheet" type="text/css" href="/<?=LoadScripts::loadCss($object['type'])?>">
         <?php if ($object['canonical']) { ?>
             <link rel="canonical" href="<?= $object['canonical']?>" />
         <?php } ?>
         <?php foreach($object['hreflangs'] as $key=>$obj) { ?>
             <link rel="alternate" href="<?= $obj?>" hreflang="<?= $key?>" />
         <?php } ?>
+        <?php if (!empty($object['faq'])) : ?>
+            <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": <?php print_r($object['faq'])    ?>
+            }
+            </script>
+        <?php endif;?>
 		<!-- Facebook Pixel Code -->
 <script>
   !function(f,b,e,v,n,t,s)
@@ -63,9 +72,9 @@ if (!headers_sent()) {
 <div class="header">
 	<div class="container-fluid">
 		<div class="row">
-			<div class="col-lg-3 logo_dbi">
+			<div itemscope itemtype="http://schema.org/Organization" class="col-lg-3 logo_dbi">
 				<?php
-					echo Core::logoСyclicLink($object['type']);
+					echo Core::logoСyclicLink();
 				?>
 			</div>
 			<div class="col-lg-7 pl0 pr0 wrapp-head-content">
@@ -82,11 +91,18 @@ if (!headers_sent()) {
 				<?php
 				$init_menu->actionMenu('main-menu');
 				?>
-				<form class="search-form" action="/" method="GET">
-					<i class="search-icon material-icons">search</i>
-					<input type="search" name="search" value="" placeholder="Введите фразу" required="required" >
-				</form>
-				</div>
+                <div class="row">
+                    <div class="col-lg-10">
+                        <form class="search-form" action="/" method="GET">
+                            <i class="search-icon material-icons">search</i>
+                            <input type="search" name="search" value="" placeholder="Введите фразу" required="required" >
+                        </form>
+                    </div>
+                    <div>
+                        <a href="#" style="font-size: 1.17vw; color: #000; text-decoration: none;}" id="city_modal" data-toggle="modal" data-target="#basicModal"><?= $object['current_city'] ?></a>
+                    </div>
+                </div>
+                </div>
 			</div>
 			<div class="col-lg-2 block_contact">
 				<ul>

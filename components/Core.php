@@ -84,19 +84,15 @@ class Core
         }
     }
 
-    public static function logoСyclicLink($type)
+    public static function logoСyclicLink()
     {
-        if( $type == 'home' )
-        {
-            $html = '<img src="/uploads/images/logo_dbi_none_bg.png">';
-            return $html;
-        }else
-        {
-            $html = '<a href="/">
-                    <img src="/uploads/images/logo_dbi_none_bg.png">
-                </a>';
-            return $html;
-        }
+        $img_src = file_exists('/uploads/images/new_logo_dbi_none_bg.png')
+            ? '/uploads/images/new_logo_dbi_none_bg.png' : '/uploads/images/logo_dbi_none_bg.png';
+
+        $html = '<a itemprop="url" href="/">' .
+                '<img itemprop="logo" src="' . $img_src . '">
+            </a>';
+        return $html;
     }
 
     public static function check_redirect_available($code)
@@ -109,5 +105,16 @@ class Core
     {
         global $db;
         return $db->query("UPDATE dbi_posts SET `canonical` = '" . $canonical. "' WHERE id = '".$post_id."' ");
+    }
+
+    public static function saveLogo()
+    {
+        $upload_dir = '../uploads/images/new_logo_dbi_none_bg.png';
+        return move_uploaded_file($_FILES['site_logotype']['tmp_name'], $upload_dir);
+    }
+
+    public static function deleteLogo()
+    {
+        return unlink("../uploads/images/new_logo_dbi_none_bg.png");
     }
 }
