@@ -1,14 +1,28 @@
 <?php
+
 class Migrate
 {
     public static function add_changed()
     {
         global $db;
-        $last_migrate = self::get_last_migrate();
+        $last_migrate = self::get_last_migrate() ?? 0;
 
         /**
          * Дополнительные поля для постов
          */
+        //Удалить после 1 запуска
+        $db->query("DROP TABLE dbi_migrate,regional_cities,regional_states,dbi_faq,dbi_filters,dbi_filters_values,dbi_filter_brands,dbi_filter_materials");
+
+        $db->query("DELETE FROM `dbi_posts` WHERE city_id > 1");
+        $db->query("UPDATE `dbi_posts` SET `city_id`=0");
+
+        $db->query("DELETE FROM `menu` WHERE city_id > 1");
+        $db->query("UPDATE `menu` SET `city_id`=0");
+
+        $db->query("DELETE FROM `langs` WHERE city_id > 1");
+        $db->query("UPDATE `langs` SET `city_id`=0");
+        unset($_COOKIE['CURRENT_CITY']);
+
         if ($last_migrate < 20220712192500) {
             $db->query("CREATE TABLE IF NOT EXISTS dbi_migrate (
                 id INT(9) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -26,13 +40,13 @@ class Migrate
                 $db->query("ALTER TABLE `dbi_posts` ADD `redirect_url` varchar(150) NOT NULL DEFAULT '';");
             }
             if (DB::returnResults("SHOW COLUMNS FROM `dbi_posts` LIKE \"city_id\"", true) === null) {
-                $db->query("ALTER TABLE `dbi_posts` ADD `city_id` INT(9) NOT NULL DEFAULT 1;");
+                $db->query("ALTER TABLE `dbi_posts` ADD `city_id` INT(9) NOT NULL DEFAULT 0;");
             }
             if (DB::returnResults("SHOW COLUMNS FROM `menu` LIKE \"city_id\"", true) === null) {
-                $db->query("ALTER TABLE `menu` ADD `city_id` INT(9) NOT NULL DEFAULT 1;");
+                $db->query("ALTER TABLE `menu` ADD `city_id` INT(9) NOT NULL DEFAULT 0;");
             }
             if (DB::returnResults("SHOW COLUMNS FROM `langs` LIKE \"city_id\"", true) === null) {
-                $db->query("ALTER TABLE `langs` ADD `city_id` INT(9) NOT NULL DEFAULT 1;");
+                $db->query("ALTER TABLE `langs` ADD `city_id` INT(9) NOT NULL DEFAULT 0;");
             }
             if (DB::returnResults("SHOW COLUMNS FROM `langs` LIKE \"main_post\"", true) === null) {
                 $db->query("ALTER TABLE `langs` ADD `main_post` INT(9) NOT NULL DEFAULT 0;");
@@ -52,10 +66,10 @@ class Migrate
                 )"
             );
             DB::returnResults($db->query("ALTER TABLE `regional_cities` ADD UNIQUE (`name_ru`, `name_en`, `name_uk`,`state_id`)"));
-            if ($db->query("SELECT name_ru FROM `regional_cities` WHERE name_ru = 'Киев'")->num_rows === 0) {
-                $db->query("INSERT INTO regional_cities (id,name_uk,name_ru,name_en,url_part,state_id, header_visible) 
-                    VALUES (1,'Київ','Киев', 'Kyiv','',10,true)");
-            }
+//            if ($db->query("SELECT name_ru FROM `regional_cities` WHERE name_ru = 'Киев'")->num_rows === 0) {
+//                $db->query("INSERT INTO regional_cities (id,name_uk,name_ru,name_en,url_part,state_id, header_visible)
+//                    VALUES (1,'Київ','Киев', 'Kyiv','kyiv',10,true)");
+//            }
 
             /**
              * Добавление областей
@@ -80,7 +94,7 @@ class Migrate
             }
             $data = DB::returnResults($db->query("
                             SELECT dbi_posts.id  FROM `dbi_posts` 
-                            where dbi_posts.id not in (SELECT langs.ru FROM langs) and city_id = 1 and lang = 'ru'"),true
+                            where dbi_posts.id not in (SELECT langs.ru FROM langs) and city_id = 0 and lang = 'ru'"), true
             ) ?? false;
 
             if ($data) {
@@ -89,6 +103,11 @@ class Migrate
                 }
                 $db->query("INSERT INTO langs (ru) VALUES " . implode(', ', $data_insert));
             }
+
+            if ($db->query("SELECT *  FROM `dbi_postmeta` WHERE `meta_key` = 'tel' and `post_id` = 600")->num_rows === 1) {
+                $db->query("DELETE FROM `dbi_postmeta` WHERE `meta_key` = 'tel' and `post_id` = 600");
+            }
+
             $db->query("INSERT INTO dbi_migrate (name,date) VALUES ('Add tables: district,cities. Add additional fields for metatags and regional.','20220712192500')");
         }
 
@@ -139,7 +158,7 @@ class Migrate
 
             $db->query("INSERT INTO dbi_migrate (name,date) VALUES ('Add tables: brands','20220722192500')");
         }
-        
+
         $db->close();
     }
 
