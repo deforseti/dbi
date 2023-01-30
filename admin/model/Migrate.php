@@ -10,19 +10,6 @@ class Migrate
         /**
          * Дополнительные поля для постов
          */
-        //Удалить после 1 запуска
-        $db->query("DROP TABLE dbi_migrate,regional_cities,regional_states,dbi_faq,dbi_filters,dbi_filters_values,dbi_filter_brands,dbi_filter_materials");
-
-        $db->query("DELETE FROM `dbi_posts` WHERE city_id > 1");
-        $db->query("UPDATE `dbi_posts` SET `city_id`=0");
-
-        $db->query("DELETE FROM `menu` WHERE city_id > 1");
-        $db->query("UPDATE `menu` SET `city_id`=0");
-
-        $db->query("DELETE FROM `langs` WHERE city_id > 1");
-        $db->query("UPDATE `langs` SET `city_id`=0");
-        unset($_COOKIE['CURRENT_CITY']);
-
         if ($last_migrate < 20220712192500) {
             $db->query("CREATE TABLE IF NOT EXISTS dbi_migrate (
                 id INT(9) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -66,10 +53,6 @@ class Migrate
                 )"
             );
             DB::returnResults($db->query("ALTER TABLE `regional_cities` ADD UNIQUE (`name_ru`, `name_en`, `name_uk`,`state_id`)"));
-//            if ($db->query("SELECT name_ru FROM `regional_cities` WHERE name_ru = 'Киев'")->num_rows === 0) {
-//                $db->query("INSERT INTO regional_cities (id,name_uk,name_ru,name_en,url_part,state_id, header_visible)
-//                    VALUES (1,'Київ','Киев', 'Kyiv','kyiv',10,true)");
-//            }
 
             /**
              * Добавление областей
