@@ -15,7 +15,7 @@ $fields_opt_name = array(
 );
 $option_page = [
 	'ru' => 600,
-	'uk' => 0,
+	'uk' => 813,
 	'en' => 0
 ];
 global $LANG;

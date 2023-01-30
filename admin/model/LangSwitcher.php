@@ -64,8 +64,8 @@ class LangSwitcher
                 'lang' => $object['lang'],
                 'cur_post' => $_data['an_l']['lngs']
             ];
-            $cities = Regionality::getNameCities('WHERE city.id != ' . ($_data['an_l']['lngs']['city_id'] ?? $_GET['city_id'] ?? 1 )) ?? [];
-            self::langSwicherHtmlLocal($an_local,$cities,$object,$_data['an_l']['lngs']['city_id'],(int) $main_post);
+            $cities = Regionality::getNameCities('WHERE city.id != ' . ($_data['object']['city_id'] ?? 0 )) ?? [];
+            self::langSwicherHtmlLocal($an_local,$cities,$object,$_data['an_l']['lngs']['city_id'] ?? 0,(int) $main_post);
         }
 	}
 
@@ -80,7 +80,6 @@ class LangSwitcher
 				<?php
 			}elseif( !$lang_arr['lngs'][$v] )
 			{
-				$ru_id = 0;
 				if( $lang_arr['lngs'][$main_lang] )
 				{
 					$ru_id =  $lang_arr['lngs'][$main_lang];
@@ -114,16 +113,15 @@ class LangSwitcher
 
 	public function langSwicherHtmlLocal($lang_arr,$cities,$object,$cur_city,$main_post)
     {
-        if($lang_arr['cur_post']['city_id'] != 1) {
-            $cities[] = ['id' => 1, 'name' => 'Украина'];
+        if($lang_arr['cur_post']['city_id'] !== '0') {
+            $cities[] = array('id' => '0', 'name' => 'Украина');
         }
         ?>
         <div class="wrapp_langs_btn">
         <?php
         foreach ( $cities as $v ) {
-            if ($v['id'] === $cur_city) {continue;}
-            if( !$lang_arr['lngs'][$v['id']] && $v['id'] != 1)
-            {
+            if ($v['id'] === $object['city_id']) {continue;}
+            if( !$lang_arr['lngs'][$v['id']] && $v['id'] !== '0'){
                 ?>
                 <div class="pull-left">
                     <form method="POST">
@@ -141,7 +139,7 @@ class LangSwitcher
             {
                 ?>
                 <div class="pull-left">
-                    <a class="lang_button_style" href="?page=<?=$_GET['page']?>&post_id=<?=$v['id'] === 1 ? $lang_arr['cur_post']['main_post'] : $lang_arr['lngs'][$v['id']]?>"><?=$v['name']?></a>
+                    <a class="lang_button_style" href="?page=<?=$_GET['page']?>&post_id=<?=$v['id'] === '0' ? $lang_arr['cur_post']['main_post'] : $lang_arr['lngs'][$v['id']]?>"><?=$v['name']?></a>
                 </div>
                 <?php
 

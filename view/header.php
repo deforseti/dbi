@@ -46,10 +46,17 @@ if (!headers_sent()) {
             {
                 "@context": "https://schema.org",
                 "@type": "FAQPage",
-                "mainEntity": <?php print_r($object['faq'])    ?>
+                "mainEntity": "<?php print_r($object['faq']);?>"
             }
             </script>
         <?php endif;?>
+        <script type="text/javascript">
+            (function(c,l,a,r,i,t,y){
+                c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "eumzxbdkeh");
+        </script>
 		<!-- Facebook Pixel Code -->
 <script>
   !function(f,b,e,v,n,t,s)
@@ -99,7 +106,7 @@ if (!headers_sent()) {
                         </form>
                     </div>
                     <div>
-                        <a href="#" style="font-size: 1.17vw; color: #000; text-decoration: none;}" id="city_modal" data-toggle="modal" data-target="#basicModal"><?= $object['current_city'] ?></a>
+                        <a href="#" style="font-size: 0.75vw; color: #000; text-decoration: none;}" id="city_modal" data-toggle="modal" data-target="#basicModal"><?= $object['current_city'] ?></a>
                     </div>
                 </div>
                 </div>

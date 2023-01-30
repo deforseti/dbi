@@ -18,8 +18,7 @@ class LoadScripts
 		{
 			array_unshift($sorce,$home_css);
 		}
-		$src = 'min/?f='.implode(',',$sorce);
-		return $src;
+        return 'min/?f='.implode(',',$sorce);
 	}
 	public static function loadJs()
 	{
@@ -33,8 +32,7 @@ class LoadScripts
 			'view/modules/OwlCarousel2/owl.carousel.min.js',
 			'view/js/js.js'
 		];
-		$src = 'min/?f='.implode(',',$sorce);
-		return $src;
+        return '/min/?f='.implode(',',$sorce);
 	}
 
 	public static function including_header_style()

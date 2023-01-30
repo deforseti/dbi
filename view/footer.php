@@ -62,13 +62,19 @@
                 <input type="text" id="search_current_city" width="90%" title="Введите название населенного пункта">
                 <div class="row">
                     <div class="col-lg-2">
-                        <?php $default_city =  $LANG === 'en' ? 'Kyiv' : ($LANG === 'ru' ? 'Киев' : 'Київ') ?>
-                        <a onclick="changeCurrentCity(1)"><?= $default_city ?></a>
+                        <?php $default_city =  $LANG === 'en' ? 'Choose city' : ($LANG === 'ru' ? 'Выберите город' : 'Виберіть місто') ?>
+                        <a onclick="changeCurrentCity(<?= $object['id']?>, '<?= $object['lang']?>',0)"><?= $default_city ?></a>
                     </div>
                 <?php foreach ($object['main_cities'] as $city):?>
+                    <?php if (isset($_COOKIE['CURRENT_CITY']) && $city['id'] === $_COOKIE['CURRENT_CITY']) { ?>
                     <div class="col-lg-2">
-                        <a onclick="changeCurrentCity(<?= $city['id'] ?> ?>')"><?= $city['name'] ?></a>
+                        <span><?= $city['name_'.$LANG] ?></span>
                     </div>
+                    <?php } else { ?>
+                    <div class="col-lg-2">
+                        <a onclick="changeCurrentCity(<?= $object['id']?>,'<?= $object['lang']?>',<?= $city['id'] ?>)"><?= $city['name_'.$LANG] ?></a>
+                    </div>
+                    <?php }?>
                 <?php endforeach;?>
                 </div>
                 <div class="col-lg-12" id="states_list">
@@ -83,9 +89,15 @@
                         <a onclick="showStates()">←<?= $LANG === 'en' ? 'Back' : 'Назад'?></a>
                     </div>
                 <?php foreach ($object['cities_list'] as $city) :?>
+                    <?php if (isset($_COOKIE['CURRENT_CITY']) && $city['id'] === $_COOKIE['CURRENT_CITY']) { ?>
+                        <div class="col-lg-2">
+                            <span><?= $city['name_'.$LANG] ?></span>
+                        </div>
+                    <?php } else { ?>
                     <div class="col-lg-3">
-                        <a id="state_<?= $city['state_id'] ?>" onclick="changeCurrentCity(<?= $city['id'] ?>)"><?= $city['name_'.$LANG] ?></a>
+                        <a id="state_<?= $city['state_id'] ?>" onclick="changeCurrentCity(<?= $object['id'] ?>, '<?= $object['lang']?>', <?= $city['id'] ?>)"><?= $city['name_'.$LANG] ?></a>
                     </div>
+                    <?php }?>
                 <?php endforeach;?>
                 </div>
             </div>

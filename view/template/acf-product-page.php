@@ -42,11 +42,11 @@ $fields = Core::getACF($object['id'],$field_names);
 					<div class="prod_img_in_content">
 						<img alt="<?=$img['alt']?>" title="<?=$img['title']?>" src="<?=Core::imgUrl($img['url'])?>">
                         <?php if (isset($object['filters']['price']) && $object['filters']['price']):?>
-                            <div class="col-lg-12" style="background: #c01f22; color: #fff;">
+                            <div class="col-lg-12" style="background: #FFFFFF; color: #000000;">
                             <?php echo (int)$object['filters']['sales'] > 0 ? '<span style="float: left;"><s>'.$object['filters']["sales"]. '₴</s></span>' : '<span></span>'?>
-                                <br>
+                                <div class="col-lg-12"></div>
                                 <span style="font-size: 20px;float: left;"><?= $object['filters']['price'] ?> ₴</span>
-                                <span class="glyphicon glyphicon-shopping-cart" style="font-size: 20px;float: right;"></span>
+                                <a class="btn cart-success" style="float: right;"><?= $object['lang'] = 'ru' ? 'Купить' : ($object['lang'] = 'en' ? 'Buy' : 'Купити')?></a>
                             </div>
                         <?php else:?>
                             <div name-prod="Запрос цены на продукт: <?=$object['post_name']?>." class="tbForm_CallMe wrp_get_price_prod init_get_prise"><span class="get_price_prod">Запросить цену</span></div>

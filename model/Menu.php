@@ -10,7 +10,7 @@ class Menu
 		global $db;
 		global $LANG;
         $city_id =  (int) htmlspecialchars($_COOKIE["CURRENT_CITY"]);
-        $where = $city_id === 1 ? ' AND city_id = 1 ' : " AND (city_id = 1 OR city_id = {$city_id}) ";
+        $where = $city_id === 0 ? ' AND city_id = 0 ' : " AND (city_id = 0 OR city_id = {$city_id}) ";
         $data = $db->query("SELECT relation_pages FROM menu WHERE menu_name = '".$menu_name."' AND lang = '".$LANG."' {$where} ORDER BY city_id DESC LIMIT 1");
 		$data =  Db::returnResults($data);
 		return $data;

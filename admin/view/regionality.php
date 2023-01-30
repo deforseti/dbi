@@ -33,16 +33,15 @@
                 </tr>
             </form>
             <?php foreach ($object['cities'] as $city) :?>
-            <?php $disabled = $city['name_ru'] === "Киев" ? 'disabled' : '' ?>
             <form method="post">
                 <tr>
                     <input hidden name="id" value="<?= $city['id']?>">
-                    <th><input class="form-control" type="text" name="name_ru" <?= $disabled ?> required value="<?= $city['name_ru'] ?>"></th>
-                    <td><input class="form-control" type="text" name="name_uk" <?= $disabled ?> required value="<?= $city['name_uk'] ?>"></td>
-                    <td><input class="form-control" type="text" name="name_en" <?= $disabled ?> required value="<?= $city['name_en'] ?>"></td>
-                    <td><input class="form-control" type="text" name="url_part" <?= $disabled ?> value="<?= $city['url_part'] ?>"></td>
+                    <th><input class="form-control" type="text" name="name_ru" required value="<?= $city['name_ru'] ?>"></th>
+                    <td><input class="form-control" type="text" name="name_uk" required value="<?= $city['name_uk'] ?>"></td>
+                    <td><input class="form-control" type="text" name="name_en" required value="<?= $city['name_en'] ?>"></td>
+                    <td><input class="form-control" type="text" name="url_part" value="<?= $city['url_part'] ?>"></td>
                     <td>
-                        <select name="state_id" class="form-select" style="color: black" <?= $disabled ?>>
+                        <select name="state_id" class="form-select" style="color: black">
                             <?php foreach ($object['states'] as $state):?>
                             <option value="<?=$state['id']?>" <?php
                                 if ($state['id'] === $city['state_id']) echo 'selected'?>><?= $state['name']?></option>
@@ -53,10 +52,8 @@
                     <div class="row">
                         <td>
                             <div class="row">
-                            <?php if ($disabled === ''):?>
                                 <button type="submit" class="btn btn-primary btn-sm" name="edit_city"><i class="glyphicon glyphicon-ok" aria-hidden="true"></i></button>
                                 <button type="submit" class="btn btn-danger btn-sm" name="remove_city"><i class="glyphicon glyphicon-trash" aria-hidden="true"></i></button>
-                            <?php endif;?>
                             </div>
                         </td>
                     </div>

@@ -22,20 +22,29 @@
 				<div class="single-element">
 					<p class="title-singl-element title-block">Ссылка поста:</p>
 					<p class="title-singl-element">Продублируйте название поста, скрипт сам сделает транслейт!</p>
-                    <?php if ((int)$object['city_id'] === 1):?>
-                        <input type="text" class="form-control" value="<?=$object['url']?>" name="post_url">
-                    <?php else :?>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="input-group">
-                                    <span class="input-group-addon" id="basic-addon1"><?= $metadata['cities_url'][$object['city_id']]?>/</span>
-                                    <input type="text" class="form-control" value="<?=$object['url']?>" name="post_url" aria-describedby="basic-addon1">
-                                    <span class="input-group-btn">
-                                        <a href="/<?= $metadata['cities_url'][$object['city_id']] .'/'. $object['url']?>" class="btn btn-default" type="button" target="_blank"><i class="glyphicon glyphicon-share-alt"></i></a>
-                                    </span>
-                                </div>
+                    <?php if ((int)$object['city_id'] === 0):?>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="input-group">
+                                <input type="text" class="form-control" value="<?=$object['url']?>" name="post_url">
+                                <span class="input-group-btn">
+                                    <a href="/<?=  $object['url']?>" class="btn btn-default" type="button" target="_blank"><i class="glyphicon glyphicon-share-alt"></i></a>
+                                </span>
                             </div>
                         </div>
+                    </div>
+                    <?php else :?>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><?= $metadata['cities_url'][$object['city_id']]?>/</span>
+                                <input type="text" class="form-control" value="<?=$object['url']?>" name="post_url" aria-describedby="basic-addon1">
+                                <span class="input-group-btn">
+                                    <a href="/<?= $metadata['cities_url'][$object['city_id']] .'/'. $object['url']?>" class="btn btn-default" type="button" target="_blank"><i class="glyphicon glyphicon-share-alt"></i></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                     <?php endif ?>
 				</div>
 				<div class="single-element">

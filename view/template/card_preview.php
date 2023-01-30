@@ -22,6 +22,9 @@ $img = json_decode($item['img_post'],TRUE);
                 </div>
                 <?php elseif($item['price']):?>
                 <div class="col-lg-12">
+                    <br>
+                </div>
+                <div class="col-lg-12">
                     <span style="font-size: 20px;float: left;"><?= $item['price'] ?> ₴</span>
                     <span class="glyphicon glyphicon-shopping-cart" style="font-size: 20px;float: right;"></span>
                 </div>

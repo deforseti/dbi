@@ -1688,7 +1688,9 @@ div.filters {
 	background: rgba(255,255,255,.7);
 	padding: 8px;
 }
-
+.filters li {
+	margin-bottom: 4px;
+}
 .filters li>span{
 	float: right;
 }
@@ -1795,4 +1797,12 @@ div.filters {
 	padding: 2px 16px;
 	background-color: #c2f0f0;
 	color: white;
+}
+
+.cart-success{
+	color:white;
+	padding:5px 15px;
+	font-size:15px;
+	font-weight:bold;
+	background-color: green;
 }

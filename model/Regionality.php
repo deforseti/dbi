@@ -18,7 +18,7 @@ class Regionality
     public static function getNameCities($where = '')
     {
         global $db;
-        $sql = "SELECT city.id,city.name_ru,city.name_ua,city.name_uk as name,url_part FROM regional_cities as city ";
+        $sql = "SELECT city.id,city.name_ru,city.name_uk,city.name_en,url_part FROM regional_cities as city ";
         if($where !== '') {
             $sql .= $where;
         }
@@ -75,11 +75,11 @@ class Regionality
         global $db;
         $data_insert = [];
 
-        if ((int)$city_id <= 1) return;
+        if ((int)$city_id <= 0) return;
 
         if (DB::returnResults($db->query("SELECT * FROM menu WHERE city_id = {$city_id} ORDER BY id")) !== null) return;
 
-        $menu = DB::returnResults($db->query("SELECT menu_name,relation_pages,lang FROM menu WHERE city_id = 1 ORDER BY id"),true);
+        $menu = DB::returnResults($db->query("SELECT menu_name,relation_pages,lang FROM menu WHERE city_id = 0 ORDER BY id"),true);
 
         foreach ($menu as $m) {
             $data_insert[] = sprintf("('%s','%s','%s','%s')", $m['menu_name'],$m['relation_pages'],$m['lang'],$city_id);

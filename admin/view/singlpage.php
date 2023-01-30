@@ -22,7 +22,16 @@
 
 				<div class="single-element">
 					<p class="title-singl-element title-block">Ссылка поста:</p>
-					<input type="text" class="form-control" value="<?=$object['url']?>" name="post_url">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="input-group">
+                                <input type="text" class="form-control" value="<?=$object['url']?>" name="post_url">
+                                <span class="input-group-btn">
+                                    <a href="/<?=  $object['url']?>" class="btn btn-default" type="button" target="_blank"><i class="glyphicon glyphicon-share-alt"></i></a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 				<div class="single-element">
 					<p class="title-singl-element title-block">Мета СЕО:</p>

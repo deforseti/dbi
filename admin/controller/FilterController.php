@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  */
@@ -49,12 +50,12 @@ class FilterController
     {
         $data = empty($_POST[0]) ? $_POST : $_POST[0];
 
-        $filters_list = array('brands','materials','sales','price');
+        $filters_list = array('brands', 'materials', 'sales', 'price');
 
-        if (FILTER::get_filter_value($_GET['post_id'], $data['type_name']) && in_array($data['type_name'],$filters_list)) {
-            FILTER::update_filter_value( $_GET['post_id'],$data);
-        } elseif(in_array($data['type_name'],$filters_list)) {
-            FILTER::add_filter_value( $_GET['post_id'],$data);
+        if (FILTER::get_filter_value($_GET['post_id'], $data['type_name']) && in_array($data['type_name'], $filters_list)) {
+            FILTER::update_filter_value($_GET['post_id'], $data);
+        } elseif (in_array($data['type_name'], $filters_list)) {
+            FILTER::add_filter_value($_GET['post_id'], $data);
         }
     }
 
@@ -62,18 +63,16 @@ class FilterController
     {
         $data_object = [];
 
-        if(isset($_POST['edit_filter']))
-        {
+        if (isset($_POST['edit_filter'])) {
 
             $validate = $this->validate_filter($_POST);
             $validate['data']['id'] = $_POST['id'];
 
             $this->data_errors['errors_post'] = empty($validate['errors']) ? Filter::editFilter($filter_name, $validate['data']) : $validate['errors'];
         }
-        if(isset($_POST['add_filter']))
-        {
+        if (isset($_POST['add_filter'])) {
             $validate = $this->validate_filter($_POST);
-            if ($filter = Filter::getFilterListByType($filter_name,"WHERE name_uk ='{$_POST['name_uk']}' OR name_ru='{$_POST['name_ru']}' OR name_en='{$_POST['name_en']}'" )) {
+            if ($filter = Filter::getFilterListByType($filter_name, "WHERE name_uk ='{$_POST['name_uk']}' OR name_ru='{$_POST['name_ru']}' OR name_en='{$_POST['name_en']}'")) {
                 $validate['errors'][] = "<p>Бренд уже существует. ID = { $filter[0]['id'] }</p><br>";
             }
             if (empty($validate['errors'])) {
@@ -82,13 +81,12 @@ class FilterController
                 $this->data_errors['errors_post'] = $validate['errors'];
             }
         }
-        if(isset($_POST['remove_filter']) && (int)$_POST['id'] > 0)
-        {
-            $this->data_errors['errors_post'] = Filter::removeFilter($filter_name, (int)$_POST['id']);
+        if (isset($_POST['remove_filter']) && (int)$_POST['id'] > 0) {
+            Filter::removeFilter($filter_name, (int)$_POST['id']);
         }
         $data_object[$filter_name] = Filter::getFilterListByType($filter_name) ?? [];
         $data_object['states'] = Filter::getStates();
-        TemplateController::actionTemplate("template/filters/{$filter_name}",$data_object,$this->data_errors);
+        TemplateController::actionTemplate("template/filters/{$filter_name}", $data_object, $this->data_errors);
 
         return true;
     }
@@ -97,55 +95,51 @@ class FilterController
     {
         $data = $errors = [];
 
-        if (empty($post['name_uk']) || empty($post['name_ru']) || empty($post['name_en']) ) {
+        if (empty($post['name_uk']) || empty($post['name_ru']) || empty($post['name_en'])) {
             $errors[] = '<p>Название бренда не может быть пустым</p><br>';
         } else {
             $data['name_uk'] = $post['name_uk'];
             $data['name_ru'] = $post['name_ru'];
             $data['name_en'] = $post['name_en'];
         }
-        return compact('data','errors');
+        return compact('data', 'errors');
     }
 
     public function save_filter()
     {
-        if( isset($_POST['save_brand_filter']) && $_GET['post_id'] )
-        {
-            if (Filter::getFilters($_GET['post_id'],'brands')) {
-                $errors = Filter::updateFilter($_POST['sortable_element'],$_GET['post_id'],'brands');
+        if (isset($_POST['save_brand_filter']) && $_GET['post_id']) {
+            if (Filter::getFilters($_GET['post_id'], 'brands')) {
+                $errors = Filter::updateFilter($_POST['sortable_element'], $_GET['post_id'], 'brands');
             } else {
-                $errors = Filter::addFilter($_POST['sortable_element'],$_GET['post_id'],'brands');
+                $errors = Filter::addFilter($_POST['sortable_element'], $_GET['post_id'], 'brands');
             }
             $this->data_array['position_element'] = $errors;
         }
-        if( isset($_POST['save_material_filter']) && $_GET['post_id'] )
-        {
-            if (Filter::getFilters($_GET['post_id'],'materials')) {
-                $errors = Filter::updateFilter($_POST['sortable_element'],$_GET['post_id'],'materials');
+        if (isset($_POST['save_material_filter']) && $_GET['post_id']) {
+            if (Filter::getFilters($_GET['post_id'], 'materials')) {
+                $errors = Filter::updateFilter($_POST['sortable_element'], $_GET['post_id'], 'materials');
             } else {
-                $errors = Filter::addFilter($_POST['sortable_element'],$_GET['post_id'],'materials');
+                $errors = Filter::addFilter($_POST['sortable_element'], $_GET['post_id'], 'materials');
             }
             $this->data_array['position_element'] = $errors;
         }
-        if( isset($_POST['save_price_filter']) && $_GET['post_id'] )
-        {
+        if (isset($_POST['save_price_filter']) && $_GET['post_id']) {
             $visible = isset($_POST['price_visible']) ? 1 : 0;
 
-            if (Filter::getFilters($_GET['post_id'],'prices')) {
-                $errors = Filter::updateFilterCheckbox($visible,$_GET['post_id'],'prices');
+            if (Filter::getFilters($_GET['post_id'], 'prices')) {
+                $errors = Filter::removeFilterValues($_GET['post_id'], 'prices');
             } else {
-                $errors = Filter::addFilterCheckbox($visible,$_GET['post_id'],'prices');
+                $errors = Filter::addFilterCheckbox($visible, $_GET['post_id'], 'prices');
             }
             $this->data_array['position_element'] = $errors;
         }
-        if( isset($_POST['save_sales_filter']) && $_GET['post_id'] )
-        {
+        if (isset($_POST['save_sales_filter']) && $_GET['post_id']) {
             $visible = isset($_POST['sales_visible']) ? 1 : 0;
 
-            if (Filter::getFilters($_GET['post_id'],'sales')) {
-                $errors = Filter::updateFilterCheckbox($visible,$_GET['post_id'],'sales');
+            if (Filter::getFilters($_GET['post_id'], 'sales')) {
+                $errors = Filter::removeFilterValues($_GET['post_id'], 'sales');
             } else {
-                $errors = Filter::addFilterCheckbox($visible,$_GET['post_id'],'sales');
+                $errors = Filter::addFilterCheckbox($visible, $_GET['post_id'], 'sales');
             }
             $this->data_array['position_element'] = $errors;
         }

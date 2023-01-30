@@ -3,7 +3,7 @@
 class Menu
 {
 	
-	public static function get_data_element($template_name, $city_id = 1)
+	public static function get_data_element($template_name, $city_id = 0)
 	{
 		global $db;
 		$lang = 'ru';
@@ -15,7 +15,7 @@ class Menu
                 FROM dbi_posts
                 LEFT JOIN regional_cities ON dbi_posts.city_id = regional_cities.id
                 WHERE type = '".$template_name."' AND lang = '".$lang."' ";
-        $sql .= $city_id !== 1 ? " AND city_id IN (1, {$city_id})" : " AND city_id = 1";
+        $sql .= $city_id !== 0 ? " AND city_id IN (0, {$city_id})" : " AND city_id = 0";
 		$data = $db->query($sql);
 		$data_object = Db::returnResults($data,true);
 		return $data_object;
@@ -39,7 +39,7 @@ class Menu
 	public static function get_list_menu_cities()
 	{
 		global $db;
-		$sql = "SELECT menu.*,regional_cities.name_ru FROM menu JOIN regional_cities ON regional_cities.id = city_id WHERE city_id > 1";
+		$sql = "SELECT menu.*,regional_cities.name_ru FROM menu JOIN regional_cities ON regional_cities.id = city_id WHERE city_id > 0";
 		$data = $db->query($sql);
 		$data_object = Db::returnResults($data);
 		return $data_object;

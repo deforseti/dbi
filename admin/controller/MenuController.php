@@ -38,7 +38,7 @@ class MenuController
 	}
 
 	// выборка всех елементов для построение списка в меню
-	public function get_data_list_items($city_id = 1)
+	public function get_data_list_items($city_id = 0)
 	{
 		foreach ( $this->type_pages as $type => $name ) {
 			$data_type = Menu::get_data_element($type,$city_id);
@@ -148,7 +148,7 @@ class MenuController
 
 	public function get_menu_cities()
     {
-        $menu = array(['id' => '1', 'name' => 'Украина', 'href' => 'https://' . $_SERVER['SERVER_NAME'] . '/admin/admin.php?page=menu']);
+        $menu = array();
         $cities = Regionality::getNameCities() ?? [];
         if (!empty($cities)) {
             foreach ($cities as $key => $city) {

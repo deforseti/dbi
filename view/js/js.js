@@ -763,14 +763,29 @@ function showStates() {
 	$('#cities_list').css('display','none');
 }
 
-function changeCurrentCity(city = 1) {
-	let oldCity = 1,
-		matchCity = document.cookie.match(new RegExp('(^| )CURRENT_CITY=([^;]+)'))[2];
+function changeCurrentCity(id, lang, city = 0) {
+	let oldCity = 0,
+		matchCity = document.cookie.match(new RegExp(/(?:^| )CURRENT_CITY=(?<city>\d+);/,'uig')) || '';
 
-	if (matchCity !== '' && matchCity !== undefined) {
-		oldCity = parseInt(matchCity) > 0 ? parseInt(matchCity) : 1;
+	if (matchCity['city'] !== '' && matchCity['city'] !== undefined && matchCity['city'] !== null) {
+		oldCity = parseInt(matchCity['city']) > 0 ? parseInt(matchCity['city']) : 0;
 	}
 
-	document.cookie = 'CURRENT_CITY=' + city;
-	document.location.href = document.location.origin + document.location.pathname + '?change_city=' + city +'&old=' + oldCity;
+	document.cookie = 'CURRENT_CITY=' + city + '; path=/';
+	document.location.href = document.location.origin + document.location.pathname
+		+ '?id=' + id + '&lang=' + lang + '&change_city=' + city +'&old=' + oldCity;
+}
+
+function categoriesHide(visible)
+{
+	if(visible) {
+		$('.menu_map .test').hide();
+		$('#category-arrow-left').hide();
+		$('#category-arrow-down').show();
+	} else {
+		$('.menu_map .test').show();
+		$('#category-arrow-left').show();
+		$('#category-arrow-down').hide();
+	}
+	return false;
 }

@@ -86,7 +86,7 @@ class Core
 
     public static function logoСyclicLink()
     {
-        $img_src = file_exists('/uploads/images/new_logo_dbi_none_bg.png')
+        $img_src = file_exists('uploads/images/new_logo_dbi_none_bg.png')
             ? '/uploads/images/new_logo_dbi_none_bg.png' : '/uploads/images/logo_dbi_none_bg.png';
 
         $html = '<a itemprop="url" href="/">' .
