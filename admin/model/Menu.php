@@ -13,9 +13,10 @@ class Menu
 		}
 		$sql = "SELECT dbi_posts.post_name, dbi_posts.id, regional_cities.name_ru as city
                 FROM dbi_posts
-                LEFT JOIN regional_cities ON dbi_posts.city_id = regional_cities.id
+                LEFT JOIN regional_cities ON dbi_posts.city_id = regional_cities.id or dbi_posts.city_id = 0
                 WHERE type = '".$template_name."' AND lang = '".$lang."' ";
         $sql .= $city_id !== 0 ? " AND city_id IN (0, {$city_id})" : " AND city_id = 0";
+
 		$data = $db->query($sql);
 		$data_object = Db::returnResults($data,true);
 		return $data_object;
