@@ -150,11 +150,12 @@ class MenuController
     {
         $menu = array();
         $cities = Regionality::getNameCities() ?? [];
+        $cities[] = ['id' => '0', 'name' => 'Украина', 'href' => '/admin/admin.php?page=menu'];
         if (!empty($cities)) {
             foreach ($cities as $key => $city) {
                 $menu[$key + 1]['id'] = $city['id'];
                 $menu[$key + 1]['name'] = $city['name'];
-                $menu[$key + 1]['href'] = 'https://' . $_SERVER['SERVER_NAME'] . '/admin/admin.php?page=menu&city=' . $city['id'];
+                $menu[$key + 1]['href'] = 'https://' . $_SERVER['SERVER_NAME'] . '/admin/admin.php?page=menu' . ($city['id'] === '0' ? '' : '&city=' . $city['id']);
             }
         }
         $this->data_menus['menu_cities'] = $menu;

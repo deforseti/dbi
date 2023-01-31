@@ -23,7 +23,7 @@
 				    	    			$param_elem = explode('|||',$Ell);
 				    	    			?>
 											<li class="dd-item" data-id="<?=$param_elem[0]?>">
-				    	        				<div class="dd-handle"><?=$param_elem[1]?><span class="remove_item_menu">Удалить<span></div>
+				    	        				<div class="dd-handle"><?=$param_elem[1] . ' | ' . $param_elem[2]?><span class="remove_item_menu">Удалить<span></div>
 				    	    				</li>
 				    	    			<?php
 				    	    		}

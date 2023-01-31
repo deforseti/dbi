@@ -17,7 +17,6 @@
             <div class="single-element">
                 <p class="title-singl-element title-block">Меню сайта</p>
                 <div class="col-lg-12">
-                    <?php $metadata['menu_cities'][] = ['id' => '0', 'name' => 'Украина', 'href' => '/admin/admin.php?page=menu']; ?>
                     <?php foreach ($metadata['menu_cities'] as $city): ?>
                         <div class="pull-left">
                             <?php if ($metadata['cur_city'] === $city['id']): ?>
@@ -48,7 +47,7 @@
                                     }
                                     ?>
 													menu-lang-swich"
-                                       href="?page=menu&menu_id=<?= $item_m['id'] ?>&lang=<?= $item_m['lang'] ?>&city=<?= $metadata['cur_city'] ?>"><?= $item_m['lang'] ?></a>
+                                       href="?page=menu&menu_id=<?= $item_m['id'] ?>&lang=<?= $item_m['lang'] ?><?= empty($metadata['cur_city']) ? '' : '&city=' . $metadata['cur_city'] ?>"><?= $item_m['lang'] ?></a>
                                     <?php
                                 }
                             }
@@ -81,8 +80,8 @@
                                         <p class="relation-element">
                                             <input type="checkbox" name="relation_category[]"
                                                    id="relation_cat_<?= $item['id'] ?>"
-                                                   value="<?= $item['id'] ?>|||<?= $item['post_name'] ?>">
-                                            <label for="relation_cat_<?= $item['id'] ?>"><?= $item['post_name'] . (empty($item['city']) ? '' : " | " . $item['city']) ?></label>
+                                                   value="<?= $item['id'] ?>|||<?= $item['post_name'] ?>|||<?= (empty($item['city']) ? 'Украина' : $item['city']) ?>">
+                                            <label for="relation_cat_<?= $item['id'] ?>"><?= $item['post_name'] . (empty($item['city']) ? 'Украина' : " | " . $item['city']) ?></label>
                                         </p>
                                         <?php
                                     }

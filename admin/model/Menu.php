@@ -11,10 +11,13 @@ class Menu
 		{
 			$lang = trim($_GET['lang']);
 		}
-		$sql = "SELECT dbi_posts.post_name, dbi_posts.id, regional_cities.name_ru as city
+		$sql = "SELECT dbi_posts.post_name,dbi_posts.id,(CASE 
+                    WHEN (regional_cities.name_ru is null and dbi_posts.city_id = 0) then 'Украина'  
+                    ELSE regional_cities.name_ru
+                END) AS city
                 FROM dbi_posts
-                LEFT JOIN regional_cities ON dbi_posts.city_id = regional_cities.id or dbi_posts.city_id = 0
-                WHERE type = '".$template_name."' AND lang = '".$lang."' ";
+                LEFT JOIN regional_cities ON dbi_posts.city_id = regional_cities.id
+                WHERE type = '" . $template_name . "' AND lang = '" . $lang . "' ";
         $sql .= $city_id !== 0 ? " AND city_id IN (0, {$city_id})" : " AND city_id = 0";
 
 		$data = $db->query($sql);
