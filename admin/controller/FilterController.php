@@ -52,10 +52,10 @@ class FilterController
 
         $filters_list = array('brands', 'materials', 'sales', 'price');
 
-        if (FILTER::get_filter_value($_GET['post_id'], $data['type_name']) && in_array($data['type_name'], $filters_list)) {
-            FILTER::update_filter_value($_GET['post_id'], $data);
+        if (Filter::get_filter_value($_GET['post_id'], $data['type_name']) && in_array($data['type_name'], $filters_list)) {
+            Filter::update_filter_value($_GET['post_id'], $data);
         } elseif (in_array($data['type_name'], $filters_list)) {
-            FILTER::add_filter_value($_GET['post_id'], $data);
+            Filter::add_filter_value($_GET['post_id'], $data);
         }
     }
 
