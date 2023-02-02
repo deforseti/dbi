@@ -4,7 +4,7 @@
 		<div class="menu_map">
             <div class="col-lg-12 filters right">
                 <h3 align="center">
-                    <?= $LANG === 'ru' ? 'Фильтры' : ($LANG === 'uk' ? 'Фільтри' : 'Filters');
+                    <?= $LANG === 'ru' ? 'Категории' : ($LANG === 'uk' ? 'Категорії' : 'Categories');
                         if ((int)$object['count_chield'] >= 0 && (!empty($metadata['filters']['lists'])
                         || !empty($metadata['filters']['checkbox']))) { ?>
                     <span id="category-arrow-left" style="float: right;display: none" onclick="categoriesHide(true)">⬅</span>
