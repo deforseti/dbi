@@ -1,6 +1,18 @@
 <?php
 class CategoryController
 {
+    private $filters_langs = [
+        'materials' => [
+            'ru' => 'Материал',
+            'uk' => 'Матеріал',
+            'en' => 'Material'
+        ],
+        'brands' => [
+            'ru' => 'Бренд',
+            'uk' => 'Бренд',
+            'en' => 'Brand',
+        ]
+    ];
 	public function actionCategory($object)
 	{
 	    $filters_selectors = array(
@@ -30,9 +42,10 @@ class CategoryController
             $menu = new Menu();
             $metadata['filters']['lists'] = $menu->getFiltersCategory($object['id']);
             $metadata['filters']['checkbox'] = $menu->get_all_filters_checkbox($object['id'], array());
-            $metadata['relation_prods'] = Category::getProductsByCategory($object,array());
+            $metadata['relation_prods'] = Category::getProductsByCategory($object);
             $metadata['count_filters'] = $this->getCountProducts($metadata['relation_prods']);
             $metadata['children_cats'] = Category::getChildrenCats($object['id']);
+            $metadata['filters_langs'] = $this->filters_langs;
         }
 
 		TemplateController::actionTemplate($object['type'],$object,$metadata);

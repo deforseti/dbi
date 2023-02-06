@@ -259,7 +259,7 @@ $('.right-card-menu').hover(function(){
 					$maxHeightElem = elemH;
 				}
 			});
-			TextContentInCard.css({'height': $maxHeightElem+'px'});
+			// TextContentInCard.css({'height': $maxHeightElem+'px'});
 		}
 	})();
 

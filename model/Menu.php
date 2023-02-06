@@ -2,38 +2,37 @@
 
 class Menu
 {
-    private static $filters = array('brands','materials');
-    private static $filters_checkbox = array('sales','prices');
+    private static $filters = array('brands', 'materials');
+    private static $filters_checkbox = array('sales', 'prices');
 
-	public static function getMenuData($menu_name)
-	{
-		global $db;
-		global $LANG;
-        $city_id =  (int) htmlspecialchars($_COOKIE["CURRENT_CITY"]);
+    public static function getMenuData($menu_name)
+    {
+        global $db;
+        global $LANG;
+        $city_id = (int)htmlspecialchars($_COOKIE["CURRENT_CITY"]);
         $where = $city_id === 0 ? ' AND city_id = 0 ' : " AND (city_id = 0 OR city_id = {$city_id}) ";
-        $data = $db->query("SELECT relation_pages FROM menu WHERE menu_name = '".$menu_name."' AND lang = '".$LANG."' {$where} ORDER BY city_id DESC LIMIT 1");
-		$data =  Db::returnResults($data);
-		return $data;
-	}
+        $data = $db->query("SELECT relation_pages FROM menu WHERE menu_name = '" . $menu_name . "' AND lang = '" . $LANG . "' {$where} ORDER BY city_id DESC LIMIT 1");
+        $data = Db::returnResults($data);
+        return $data;
+    }
 
-	public static function getItemMenuData($arr_id)
-	{
-		$extruct_id = array();
+    public static function getItemMenuData($arr_id)
+    {
+        $extruct_id = array();
 
-		Menu::exstructId($extruct_id,$arr_id);
-		$str_ids = implode(',',$extruct_id);
-		global $db;
-		$data = $db->query("SELECT id,post_name,url FROM dbi_posts WHERE id IN (".$str_ids.") ");
-		$data =  Db::returnResults($data);
-		$data_key_id = array();
-		if( is_array($data) )
-		{
-			foreach ( $data as $k => $v ) {
-				$data_key_id[$v['id']] = $v;
-			}
-		}
-		return $data_key_id;
-	}
+        Menu::exstructId($extruct_id, $arr_id);
+        $str_ids = implode(',', $extruct_id);
+        global $db;
+        $data = $db->query("SELECT id,post_name,url FROM dbi_posts WHERE id IN (" . $str_ids . ") ");
+        $data = Db::returnResults($data);
+        $data_key_id = array();
+        if (is_array($data)) {
+            foreach ($data as $k => $v) {
+                $data_key_id[$v['id']] = $v;
+            }
+        }
+        return $data_key_id;
+    }
 
 	public static function exstructId(&$extruct_id,$arr)
 	{
