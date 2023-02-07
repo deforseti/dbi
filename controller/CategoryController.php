@@ -1,4 +1,5 @@
 <?php
+
 class CategoryController
 {
     private $filters_langs = [
@@ -13,10 +14,11 @@ class CategoryController
             'en' => 'Brand',
         ]
     ];
-	public function actionCategory($object)
-	{
-	    $filters_selectors = array(
-	        'brands_id' => 'multiple',
+
+    public function actionCategory($object)
+    {
+        $filters_selectors = array(
+            'brands_id' => 'multiple',
             'materials_id' => 'multiple',
             'sales' => 'solo'
         );
@@ -48,11 +50,11 @@ class CategoryController
             $metadata['filters_langs'] = $this->filters_langs;
         }
 
-		TemplateController::actionTemplate($object['type'],$object,$metadata);
-		return true;
-	}
+        TemplateController::actionTemplate($object['type'], $object, $metadata);
+        return true;
+    }
 
-	public function actionFilterCategory($object)
+    public function actionFilterCategory($object)
     {
         $data = $this->validateFilter($_GET);
         $menu = new Menu();
@@ -60,6 +62,7 @@ class CategoryController
         $metadata['filters']['checkbox'] = $menu->get_all_filters_checkbox($object['id'], $data);
         $metadata['relation_prods'] = Category::getProductsByCategory($object, $data);
         $metadata['count_filters'] = $this->getCountProducts($metadata['relation_prods']);
+        $metadata['filters_langs'] = $this->filters_langs;
 
         return $metadata;
     }
@@ -73,13 +76,13 @@ class CategoryController
         );
 
         foreach ($products as $product) {
-            if($product['sales'] !== '' && $product['sales'] !== null) {
+            if ($product['sales'] !== '' && $product['sales'] !== null) {
                 $num_category['sales']++;
             }
-            if($product['brands'] !== '' && $product['brands'] !== null) {
+            if ($product['brands'] !== '' && $product['brands'] !== null) {
                 $num_category['brands'][$product['brands']]++;
             }
-            if($product['materials'] !== '' && $product['materials'] !== null) {
+            if ($product['materials'] !== '' && $product['materials'] !== null) {
                 $num_category['materials'][$product['materials']]++;
             }
         }
@@ -91,16 +94,16 @@ class CategoryController
     {
         $data = array();
         $solo_checkbox = array('sales');
-        $group_checkbox = array('brands_id','materials_id');
-        $params = array('price_min','price_max');
+        $group_checkbox = array('brands_id', 'materials_id');
+        $params = array('price_min', 'price_max');
 
         foreach ($get as $key => $filter) {
-            if (in_array($key,$solo_checkbox)) {
+            if (in_array($key, $solo_checkbox)) {
                 $data[$key] = 1;
-            } elseif(in_array($key, $params)) {
+            } elseif (in_array($key, $params)) {
                 $data[$key] = $filter;
-            } elseif(in_array($key, $group_checkbox)) {
-                $data[$key] = gettype($filter) === 'array' ? $filter : explode(':',$filter);
+            } elseif (in_array($key, $group_checkbox)) {
+                $data[$key] = gettype($filter) === 'array' ? $filter : explode(':', $filter);
             }
         }
 

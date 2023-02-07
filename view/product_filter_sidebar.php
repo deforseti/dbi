@@ -9,7 +9,8 @@
                 <hr>
             </div>
             <div class="col-lg-12 filters right">
-                <input type="checkbox" name="sales" <?= $metadata['filters_selected']['sales'] ? 'checked' : '' ?>>
+                <input type="checkbox" name="sales" <?php $metadata['filters_selected']['sales'] ? 'checked ' : '';
+                isset($metadata['count_filters']['sales']) && (int)$metadata['count_filters']['sales'] ? '' : ' disabled '; ?>>
                 <label for="sales"><?= $LANG === 'ru' ? 'Акционные товары' : ($LANG === 'uk' ? 'Акційні товари' : 'Promotional goods') ?></label>
                 <span class="filter-span">(<?= (int)$metadata['count_filters']['sales'] ?? 0 ?>)</span>
             </div>
@@ -27,7 +28,8 @@
                             <?php $checked = !empty($metadata['filters_selected']['brands_id']) && in_array($brand['type_id'], $metadata['filters_selected']['brands_id']) ? 'checked' : ''; ?>
                             <input type="checkbox" <?= $checked ?> name="brand_<?= $brand['type_id'] ?>"
                                    id="brand_<?= $brand['type_id'] ?>" data-id="<?= $brand['type_id'] ?>"
-                                   data-filter="brand" class="checkbox-filter__link">
+                                   data-filter="brand" class="checkbox-filter__link"
+                                <?= isset($metadata['count_filters']['brands'][$brand['type_id']]) && (int)$metadata['count_filters']['brands'][$brand['type_id']] ? '' : ' disabled'; ?>>
                             <label for="brand_<?= $brand['type_id'] ?>">
                                 <?= $brand["name_" . $LANG] ?>
                             </label>
@@ -69,7 +71,8 @@
                             <?php $checked = !empty($metadata['filters_selected']['materials_id']) && in_array($material['type_id'], $metadata['filters_selected']['materials_id']) ? 'checked' : ''; ?>
                             <input type="checkbox"<?= $checked ?> name="material_<?= $material['type_id'] ?>"
                                    id="material_<?= $material['type_id'] ?>" data-id="<?= $material['type_id'] ?>"
-                                   data-filter="material" class="checkbox-filter__link">
+                                   data-filter="material" class="checkbox-filter__link"
+                                <?= isset($metadata['count_filters']['materials'][$material['type_id']]) && (int)$metadata['count_filters']['materials'][$material['type_id']] ? '' : ' disabled '; ?>>
                             <label for="material_<?= $material['type_id'] ?>">
                                 <?= $material["name_" . $LANG] ?>
                             </label>

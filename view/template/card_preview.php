@@ -6,16 +6,21 @@ $img = json_decode($item['img_post'], TRUE);
         <div class="img-context">
             <img alt="<?= $img['alt'] ?>" title="<?= $img['title'] ?>" src="<?= Core::imgUrl($img['url']) ?>">
         </div>
-        <div class="text-context" 222 style="height:max-content !important;">
+        <div class="text-context" style="height:max-content !important;">
             <p class="" style="padding-top: 4.5px; font-size: 15px;"><?= $item['post_name'] ?></p>
         </div>
     </a>
     <?php if ((int)$object['count_chield'] !== 0) : ?>
         <div class="product_description text-context">
-            <div class="rating-result">
-                <?php for ($i = 0; $i < 5; $i++) { ?>
-                    <span class="active"></span>
-                <?php } ?>
+            <div class="row">
+                <div class="rating-result col-lg-7">
+                    <?php for ($i = 1; $i <= 5; $i++) { ?>
+                        <span class="<?= $item['rait_prod'] >= $i ? 'active' : '' ?>"></span>
+                    <?php } ?>
+                </div>
+                <div class="col-lg-5" style="padding-left: 0px;">
+                    <span style="text-transform: none;font-size: 0.9vw;float: right;display: contents;">0 <?= $object['lang'] === 'ru' ? 'отзывов' : ($object['lang'] === 'uk' ? 'відгуків' : 'reviews') ?></span>
+                </div>
             </div>
             <div class="row">
                 <!--                price                       -->
@@ -53,16 +58,14 @@ $img = json_decode($item['img_post'], TRUE);
                             </svg>
                     </div>
                 </div>
-                <div class="row">
-                    <?php if (!empty($item['materials'])) {
-                        foreach ($metadata['filters_langs'] as $key => $filterName) {
-                            if (!empty($item[$key . '_name'])) {
-                                ?>
-                                <div class="col-lg-12" style="text-transform:none;">
-                                    <span style="font-size: 0.9vw;"><?= $filterName[$object['lang']] . ': ' . $item[$key . '_name'] ?></span>
-                                </div>
-                            <?php }
-                        }
+                <div class="row" style="padding-left: 5px;">
+                    <?php foreach ($metadata['filters_langs'] as $key => $filterName) {
+                        if (!empty($item[$key . '_name'])) {
+                            ?>
+                            <div class="col-lg-12" style="text-transform:none;">
+                                <span style="font-size: 0.9vw;"><?= $filterName[$object['lang']] . ': ' . $item[$key . '_name'] ?></span>
+                            </div>
+                        <?php }
                     } ?>
                 </div>
             </div>

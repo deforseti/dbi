@@ -2161,14 +2161,15 @@ div.filters {
 }
 
 .rating-result {
-    width: 265px;
-    margin: 0 auto;
+    float: left;
+    padding-right: 0px;
+    padding-bottom: 5px;
 }
 
 .rating-result span {
     padding: 0;
-    font-size: 32px;
-    margin: 0 3px;
+    font-size: 18px;
+    margin: 0 1px;
     line-height: 1;
     color: lightgrey;
     text-shadow: 1px 1px #bbb;
@@ -2182,6 +2183,7 @@ div.filters {
     color: gold;
     text-shadow: 1px 1px #c60;
 }
+
 .rating-result > a:hover {
     text-decoration: none !important;
 }
