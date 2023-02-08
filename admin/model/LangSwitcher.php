@@ -64,7 +64,9 @@ class LangSwitcher
                 'lang' => $object['lang'],
                 'cur_post' => $_data['an_l']['lngs']
             ];
-            $cities = Regionality::getNameCities('WHERE city.id != ' . ($_data['object']['city_id'] ?? 0 )) ?? [];
+            $cities = array_merge(
+                Regionality::getNameCities('WHERE city.id != ' . ($_data['object']['city_id'] ?? 0 )) ?? []
+            );
             self::langSwicherHtmlLocal($an_local,$cities,$object,$_data['an_l']['lngs']['city_id'] ?? 0,(int) $main_post);
         }
 	}
@@ -78,13 +80,10 @@ class LangSwitcher
 				?>
 					<span class="lang_button_style curr_lang_p"><?=$v?></span>
 				<?php
-			}elseif( !$lang_arr['lngs'][$v] )
-			{
-				if( $lang_arr['lngs'][$main_lang] )
-				{
+			} elseif( !$lang_arr['lngs'][$v] ) {
+                if( $lang_arr['lngs'][$main_lang] ) {
 					$ru_id =  $lang_arr['lngs'][$main_lang];
-				}else
-				{
+				} else {
 					$ru_id = (int)$_GET['post_id'];
 				}
 				?>
@@ -100,12 +99,10 @@ class LangSwitcher
 					<input title="Добавить перевод страницы <?=$v?>" class="lang_button_style" type="submit" name="add_new_page_lang" value="+ <?=$v?>">
 				</form>
 				<?php
-			}else
-			{
+			} else {
 				?>
 					<a class="lang_button_style" href="?page=<?=$_GET['page']?>&post_id=<?=$lang_arr['lngs'][$v]?>"><?=$v?></a>
 				<?php
-				
 			}
 		}
 		echo '</div>';
@@ -120,8 +117,7 @@ class LangSwitcher
         <div class="wrapp_langs_btn">
         <?php
         foreach ( $cities as $v ) {
-            if ($v['id'] === $object['city_id']) {continue;}
-            if( !$lang_arr['lngs'][$v['id']] && $v['id'] !== '0'){
+            if( !$lang_arr['lngs'][$v['id']] && $v['id'] !== '0') {
                 ?>
                 <div class="pull-left">
                     <form method="POST">
@@ -134,15 +130,13 @@ class LangSwitcher
                         <input title="Добавить город <?=$v['name']?>" class="lang_button_style" type="submit" name="add_new_page_local" value="+ <?=$v['name']?>">
                     </form>
                 </div>
-                <?php
-            }else
-            {
+            <?php
+            } else {
                 ?>
                 <div class="pull-left">
                     <a class="lang_button_style" href="?page=<?=$_GET['page']?>&post_id=<?=$v['id'] === '0' ? $lang_arr['cur_post']['main_post'] : $lang_arr['lngs'][$v['id']]?>"><?=$v['name']?></a>
                 </div>
-                <?php
-
+            <?php
             }
         }
         echo '</div></div>';
