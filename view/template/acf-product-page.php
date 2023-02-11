@@ -44,11 +44,11 @@ $fields = Core::getACF($object['id'],$field_names);
                         <?php if (isset($object['filters']['price']) && $object['filters']['price']):?>
                             <div class="col-lg-12" style="background: #FFFFFF; color: #000000;">
                                 <div class="row">
-                                    <div class="col-lg-7" style="padding: 0px;text-align: center;">
-                                        <span class="price-font" style="font-size: 2.0475vw;"><?= $object['filters']['price'] ?> ₴</span>
+                                    <div class="col-lg-6" style="padding: 0;text-align: center;">
+                                        <span class="price-font"><?= $object['filters']['price'] ?> ₴</span>
                                     </div>
-                                    <div class="col-lg-5" style="padding: 0px;">
-                                        <a class="btn cart-success" style="font-size: 2.0475vw;"><?= $object['lang'] = 'ru' ? 'Купить' : ($object['lang'] = 'en' ? 'Buy' : 'Купити')?></a>
+                                    <div class="col-lg-6" style="padding: 0;">
+                                        <a class="btn cart-success"><?= $object['lang'] = 'ru' ? 'Купить' : ($object['lang'] = 'en' ? 'Buy' : 'Купити')?></a>
                                     </div>
                                 </div>
                             </div>
@@ -61,8 +61,6 @@ $fields = Core::getACF($object['id'],$field_names);
 				if( strlen($fields['short_text_page']) )
 				{
 					echo htmlspecialchars_decode($fields['short_text_page']);
-				}else{
-					
 				}
 				echo htmlspecialchars_decode($object['content']);
 			}

@@ -19,7 +19,7 @@ $img = json_decode($item['img_post'], TRUE);
                     <?php } ?>
                 </div>
                 <div class="col-lg-5" style="padding-left: 0px;">
-                    <span style="text-transform: none;font-size: 0.9vw;float: right;display: contents;">0 <?= $object['lang'] === 'ru' ? 'отзывов' : ($object['lang'] === 'uk' ? 'відгуків' : 'reviews') ?></span>
+<!--                    <span style="text-transform: none;font-size: 0.9vw;float: right;display: contents;">0 --><?php //= $object['lang'] === 'ru' ? 'отзывов' : ($object['lang'] === 'uk' ? 'відгуків' : 'reviews') ?><!--</span>-->
                 </div>
             </div>
             <div class="row">
@@ -33,7 +33,7 @@ $img = json_decode($item['img_post'], TRUE);
                     <span class="glyphicon glyphicon-shopping-cart" style="font-size: 20px;float: right;"></span>
                 </div>
                 <!--                price-end                   -->
-                <div class="col-lg-12" style="text-transform: none;padding-right: 0px;text-align: right; color: green">
+                <div class="col-lg-12" style="text-transform: none;padding-right: 0px;text-align: right; margin-bottom:5px;color: green">
                     <div class="col-lg-7" style="text-align: right; padding: 0px;">
                         <span style="font-size: 0.9vw"><?= $item['lang'] === 'ru' ? 'Готов к отправке' : ($item['lang'] === 'uk' ? 'Готовий до відправлення' : 'Ready to ship') ?></span>
                     </div>
@@ -58,7 +58,7 @@ $img = json_decode($item['img_post'], TRUE);
                             </svg>
                     </div>
                 </div>
-                <div class="row" style="padding-left: 5px;">
+                <div class="row" style="padding-left: 5px;padding-bottom: 10px;">
                     <?php foreach ($metadata['filters_langs'] as $key => $filterName) {
                         if (!empty($item[$key . '_name'])) {
                             ?>

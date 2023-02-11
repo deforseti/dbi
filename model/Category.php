@@ -42,10 +42,12 @@ class Category
 
         $data = Db::returnResults(
             $db->query("SELECT {$select} FROM dbi_posts {$join} {$where}"), true
-        );
+        ) ?? [];
+
         foreach ($data as &$d) {
             $d['rait_prod'] = (int)preg_replace('!["\']+!u', '', $d['rait_prod']);
         }
+
         return empty($data) ? array() : $data;
     }
 }

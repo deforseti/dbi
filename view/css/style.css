@@ -201,7 +201,7 @@ body .text-context p {
     font-size: 75%;
 }
 
-.row1_tm h1, .content-card h1 {
+.row1_tm h1, .content-card h1,.cart-success, .price-font {
     font-size: 1.75rem;
 }
 
@@ -217,7 +217,7 @@ body .text-context p {
     font-size: 1.125rem;
 }
 
-.row1_tm > h1, .row1_tm > .h_style {
+.row1_tm > h1, .row1_tm > .h_style,.row1_tm > .cart-success, .row1_tm > .price-font {
     padding: 15px 15px;
     text-align: center;
     font-size: 32px;
@@ -898,6 +898,7 @@ input[name="send_from_dbi"][disabled]:hover {
     float: left;
     width: 30%;
     margin-right: 15px;
+    border: 3px  solid grey;
 }
 
 .prod_img_in_content img {
@@ -1733,7 +1734,7 @@ textarea.comp_nm {
         text-align: center;
     }
 
-    .row1_tm h1, .content-card h1 {
+    .row1_tm h1, .content-card h1,.cart-success, .price-font {
         font-size: 1.4375rem;
     }
 
@@ -2138,18 +2139,16 @@ div.filters {
 
 .cart-success {
     color: white;
-    font-size: 2.0475vw;
     font-weight: bold;
     background-color: green;
     float: right;
     text-align: center;
-    height: 100%;
-    padding: 5px 0px;
+    padding: 5px;
+    width: -webkit-fill-available;
 }
 
 .price-font {
-    font-size: 2.0475vw;
-    padding: 5px 0px;
+    padding: 5px;
     text-align: center;
     display: block;
     color: red;
