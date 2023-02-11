@@ -1,1 +1,4 @@
 /uploads/
+/config/db_params.php
+/admin/config/db_params.php
+/.idea/
